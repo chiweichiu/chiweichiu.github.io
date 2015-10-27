@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-10-27T07:14:05.726Z</updated>
+  <updated>2015-10-27T11:02:32.846Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,26 +15,51 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Flash Calibration]]></title>
+    <title><![CDATA[Camera Calibration]]></title>
     <link href="http://yoursite.com/2015/10/27/flash-calibration/"/>
     <id>http://yoursite.com/2015/10/27/flash-calibration/</id>
     <published>2015-10-27T05:50:55.000Z</published>
-    <updated>2015-10-27T07:14:05.726Z</updated>
-    <content type="html"><![CDATA[<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><p>New a CameraContext which inherit from CameraListener.
+    <updated>2015-10-27T11:02:32.846Z</updated>
+    <content type="html"><![CDATA[<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><blockquote>
+<p>flash calibration</p>
+</blockquote>
+<p>New a CameraContext which inherit from CameraListener.
 Then call Camera::connect to connect to CameraService.
 You can use full camera function now.</p>
 <p>Put device on top of dark box.
 Run falsh calibration command to get a raw image
 (callback postData and get bayer-qcom-10gbrg buffer) by taking picture.</p>
-<p>dump 8bit image from 10bit image.
-select 1/6 center area to calculate the r,g,b gain</p>
+<p>Dump 8bit image from 10bit image.
+select 1/6 center area to calculate the r,g,b gain 
+check if the result is correct.</p>
+<p>write to emmc</p>
+<blockquote>
+<p>lsc calibration</p>
+</blockquote>
+<p>open camera -&gt; take picture -&gt; saveRawFile </p>
+<p>-&gt; VFE_LSC_Calibraiton</p>
+<pre><code>-<span class="ruby">&gt; <span class="constant">LensCorrectionLib</span>
+</span>    -<span class="ruby">&gt; extract <span class="constant">R</span>/<span class="constant">Gr</span>/<span class="constant">Gb</span>/<span class="constant">B</span> from raw image (rolloff size <span class="symbol">:</span> <span class="number">13</span>x17)
+</span>    -<span class="ruby">&gt; calibrate_rolloff_mesh_4_channel <span class="symbol">:</span> calculate rolloff table 
+</span>-<span class="ruby">&gt; <span class="constant">LSC_Verification</span>
+</span>    -<span class="ruby">&gt; verify calibration data
+</span>    -<span class="ruby">&gt; <span class="constant">WriteFlash_for_bayer_Cam</span> <span class="symbol">:</span> emmc <span class="keyword">or</span> nand flash                                             </span>
+</code></pre><blockquote>
+<p>awb calibration</p>
+</blockquote>
+<p>property_set(&quot;mfg.awb.calibration.trigger&quot;, &quot;1&quot;) trigger 3a thread to run HTC_AWB_Calibration_collect() </p>
+<blockquote>
+<p>verify result</p>
+</blockquote>
 <h2 id="Trouble shooting"><strong>Trouble shooting</strong></h2><ul>
 <li>raw image have a black area on top of picture duo to disable frame-skip.</li>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><p>New a CameraContext which inherit from CameraListener.
-Th]]>
+    <![CDATA[<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><blockquote>
+<p>flash calibration</p>
+</blockquote>
+<p>New a]]>
     </summary>
     
       <category term="Camera" scheme="http://yoursite.com/categories/Camera/"/>
