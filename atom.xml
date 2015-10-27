@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-10-27T07:11:27.766Z</updated>
+  <updated>2015-10-27T07:14:05.726Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,14 +19,8 @@
     <link href="http://yoursite.com/2015/10/27/flash-calibration/"/>
     <id>http://yoursite.com/2015/10/27/flash-calibration/</id>
     <published>2015-10-27T05:50:55.000Z</published>
-    <updated>2015-10-27T07:11:27.766Z</updated>
-    <content type="html"><![CDATA[<ul>
-<li>Calibration architecure<ul>
-<li>Trouble shooting</li>
-</ul>
-</li>
-</ul>
-<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><p>New a CameraContext which inherit from CameraListener.
+    <updated>2015-10-27T07:14:05.726Z</updated>
+    <content type="html"><![CDATA[<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><p>New a CameraContext which inherit from CameraListener.
 Then call Camera::connect to connect to CameraService.
 You can use full camera function now.</p>
 <p>Put device on top of dark box.
@@ -39,13 +33,8 @@ select 1/6 center area to calculate the r,g,b gain</p>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<ul>
-<li>Calibration architecure<ul>
-<li>Trouble shooting</li>
-</ul>
-</li>
-</ul>
-<h2 id="Calibration architecture"><strong>Calibration archi]]>
+    <![CDATA[<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><p>New a CameraContext which inherit from CameraListener.
+Th]]>
     </summary>
     
       <category term="Camera" scheme="http://yoursite.com/categories/Camera/"/>
