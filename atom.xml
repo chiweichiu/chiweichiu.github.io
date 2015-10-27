@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-10-23T12:37:08.162Z</updated>
+  <updated>2015-10-27T07:11:27.766Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,17 +15,57 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Camera Sensor porting on Qualcomm]]></title>
-    <link href="http://yoursite.com/2015/10/23/hello-world/"/>
-    <id>http://yoursite.com/2015/10/23/hello-world/</id>
-    <published>2015-10-23T12:37:08.162Z</published>
-    <updated>2015-10-23T12:37:08.162Z</updated>
+    <title><![CDATA[Flash Calibration]]></title>
+    <link href="http://yoursite.com/2015/10/27/flash-calibration/"/>
+    <id>http://yoursite.com/2015/10/27/flash-calibration/</id>
+    <published>2015-10-27T05:50:55.000Z</published>
+    <updated>2015-10-27T07:11:27.766Z</updated>
     <content type="html"><![CDATA[<ul>
-<li>Sensor architecture</li>
+<li>Calibration architecure<ul>
+<li>Trouble shooting</li>
+</ul>
+</li>
+</ul>
+<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><p>New a CameraContext which inherit from CameraListener.
+Then call Camera::connect to connect to CameraService.
+You can use full camera function now.</p>
+<p>Put device on top of dark box.
+Run falsh calibration command to get a raw image
+(callback postData and get bayer-qcom-10gbrg buffer) by taking picture.</p>
+<p>dump 8bit image from 10bit image.
+select 1/6 center area to calculate the r,g,b gain</p>
+<h2 id="Trouble shooting"><strong>Trouble shooting</strong></h2><ul>
+<li>raw image have a black area on top of picture duo to disable frame-skip.</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<ul>
+<li>Calibration architecure<ul>
+<li>Trouble shooting</li>
+</ul>
+</li>
+</ul>
+<h2 id="Calibration architecture"><strong>Calibration archi]]>
+    </summary>
+    
+      <category term="Camera" scheme="http://yoursite.com/categories/Camera/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Camera Sensor porting on Qualcomm]]></title>
+    <link href="http://yoursite.com/2015/10/27/hello-world/"/>
+    <id>http://yoursite.com/2015/10/27/hello-world/</id>
+    <published>2015-10-27T05:47:12.042Z</published>
+    <updated>2015-10-27T05:47:12.042Z</updated>
+    <content type="html"><![CDATA[<ul>
+<li>Sensor architecture<ul>
 <li>Porting sensor</li>
 <li>Trouble shooting</li>
 </ul>
-<h2 id="Sensor_architecture"><strong>Sensor architecture</strong></h2><ul>
+</li>
+</ul>
+<h2 id="Sensor architecture"><strong>Sensor architecture</strong></h2><ul>
 <li><strong>kernel sapce</strong></li>
 </ul>
 <blockquote>
@@ -45,7 +85,15 @@
 <p>static struct i2c_driver xxx_sensor_i2c_driver</p>
 <p>static struct platform_driver xxx_sensor_platform_driver
 (one parameter is <em>msm_sensor_ctrl_t</em>)</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static struct msm_sensor_ctrl_t xxx_sensor_ctrl = &#123;&#10;&#9;.sensor_i2c_client = &#38;xxx_sensor_i2c_client,&#10;&#9;.power_setting_array.power_setting = xxx_sensor_power_setting,&#10;&#9;.power_setting_array.size = ARRAY_SIZE(xxx_sensor_power_setting),&#10;&#9;.msm_sensor_mutex = &#38;xxx_sensor_mut,&#10;&#9;.sensor_v4l2_subdev_info = xxx_sensor_subdev_info,&#10;&#9;.sensor_v4l2_subdev_info_size = ARRAY_SIZE(xxx_sensor_subdev_info),&#10;&#9;.func_tbl = &#38;xxx_sensor_sensor_func_tbl,&#10;&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static struct msm_sensor_ctrl_t xxx_sensor_ctrl = {
+	.sensor_i2c_client = &amp;xxx_sensor_i2c_client,
+	.power_setting_array.power_setting = xxx_sensor_power_setting,
+	.power_setting_array.size = ARRAY_SIZE(xxx_sensor_power_setting),
+	.msm_sensor_mutex = &amp;xxx_sensor_mut,
+	.sensor_v4l2_subdev_info = xxx_sensor_subdev_info,
+	.sensor_v4l2_subdev_info_size = ARRAY_SIZE(xxx_sensor_subdev_info),
+	.func_tbl = &amp;xxx_sensor_sensor_func_tbl,
+};</span><br></pre></td></tr></table></figure>
 <ul>
 <li><strong>user space</strong></li>
 </ul>
@@ -56,33 +104,70 @@ and camera module is one of them.
 <p>moduel_sensor.c</p>
 </blockquote>
 <p>it will call function  <em>module_sensor_init</em>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static int32_t (*sub_module_init[])(sensor_func_tbl_t *) = &#123;&#10;  [SUB_MODULE_SENSOR]       = sensor_sub_module_init,&#10;  [SUB_MODULE_CHROMATIX]    = chromatix_sub_module_init,&#10;  [SUB_MODULE_ACTUATOR]     = actuator_sub_module_init,&#10;  [SUB_MODULE_EEPROM]       = eeprom_sub_module_init,&#10;  [SUB_MODULE_LED_FLASH]    = led_flash_sub_module_init,&#10;  [SUB_MODULE_STROBE_FLASH] = strobe_flash_sub_module_init,&#10;  [SUB_MODULE_CSIPHY]       = csiphy_sub_module_init,&#10;  [SUB_MODULE_CSIPHY_3D]    = csiphy_sub_module_init,&#10;  [SUB_MODULE_CSID]         = csid_sub_module_init,&#10;  [SUB_MODULE_CSID_3D]      = csid_sub_module_init,&#10;  [SUB_MODULE_OIS]          = NULL,&#10;&#125;;&#10;&#10;int32_t sensor_sub_module_init(sensor_func_tbl_t *func_tbl)&#10;&#123;&#10;  if (!func_tbl) &#123;&#10;    SERR(&#34;failed&#34;);&#10;    return SENSOR_FAILURE;&#10;  &#125;&#10;  func_tbl-&#62;open = sensor_open;&#10;  func_tbl-&#62;process = sensor_process;&#10;  func_tbl-&#62;close = sensor_close;&#10;  return SENSOR_SUCCESS;&#10;&#125;&#10;&#10;static int32_t sensor_process(void *sctrl,&#10;  sensor_submodule_event_type_t event, void *data)&#10;&#123;&#10;....&#10;  case SENSOR_SET_RESOLUTION:&#10;    rc = sensor_set_resolution(sctrl, data);&#10;    break;&#10;....</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static int32_t (*sub_module_init[])(sensor_func_tbl_t *) = {
+  [SUB_MODULE_SENSOR]       = sensor_sub_module_init,
+  [SUB_MODULE_CHROMATIX]    = chromatix_sub_module_init,
+  [SUB_MODULE_ACTUATOR]     = actuator_sub_module_init,
+  [SUB_MODULE_EEPROM]       = eeprom_sub_module_init,
+  [SUB_MODULE_LED_FLASH]    = led_flash_sub_module_init,
+  [SUB_MODULE_STROBE_FLASH] = strobe_flash_sub_module_init,
+  [SUB_MODULE_CSIPHY]       = csiphy_sub_module_init,
+  [SUB_MODULE_CSIPHY_3D]    = csiphy_sub_module_init,
+  [SUB_MODULE_CSID]         = csid_sub_module_init,
+  [SUB_MODULE_CSID_3D]      = csid_sub_module_init,
+  [SUB_MODULE_OIS]          = NULL,
+};
+
+int32_t sensor_sub_module_init(sensor_func_tbl_t *func_tbl)
+{
+  if (!func_tbl) {
+    SERR(&quot;failed&quot;);
+    return SENSOR_FAILURE;
+  }
+  func_tbl-&gt;open = sensor_open;
+  func_tbl-&gt;process = sensor_process;
+  func_tbl-&gt;close = sensor_close;
+  return SENSOR_SUCCESS;
+}
+
+static int32_t sensor_process(void *sctrl,
+  sensor_submodule_event_type_t event, void *data)
+{
+....
+  case SENSOR_SET_RESOLUTION:
+    rc = sensor_set_resolution(sctrl, data);
+    break;
+....</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>sensor.c</p>
 </blockquote>
 <p>To load spectific user sapce driver : sensor_load_library(const char <em>name, void </em>data)</p>
-<h2 id="Porting_sensor"><strong>Porting sensor</strong></h2><blockquote>
+<h2 id="Porting sensor"><strong>Porting sensor</strong></h2><blockquote>
 <p>dtsi
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">qcom,camera@<span class="number">1</span> &#123;</span><br><span class="line">        cell-index = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        compatible = <span class="string">"htc,s5k5e_htc"</span>;</span><br><span class="line">        reg = &lt;<span class="number">0x20</span>&gt;;</span><br><span class="line">        qcom,slave-id = &lt;<span class="number">0x20</span> <span class="number">0x0000</span> <span class="number">0x5E20</span>&gt;;</span><br><span class="line">        qcom,csiphy-sd-index = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        qcom,csid-sd-index = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        qcom,mount-angle = &lt;<span class="number">270</span>&gt;;</span><br><span class="line">        qcom,sensor-name = <span class="string">"s5k5e_htc"</span>;</span><br><span class="line">        cam_vdig-supply = &lt;&amp;ncp6924_ldo3&gt;;</span><br><span class="line">        cam_vio-supply = &lt;&amp;ncp6924_ldo4&gt;;</span><br><span class="line">        cam_vana-supply = &lt;&amp;msm_gpio <span class="number">8</span> <span class="number">0</span>&gt;;</span><br><span class="line">        cam_vaf-supply = &lt;&amp;ncp6924_ldo1&gt;;</span><br><span class="line">        qcom,cam-vreg-name = <span class="string">"cam_vdig"</span>, <span class="string">"cam_vio"</span>, <span class="string">"cam_vana"</span>,<span class="string">"cam_vaf"</span>;</span><br><span class="line">        qcom,cam-vreg-type = &lt;<span class="number">0</span> <span class="number">0</span> <span class="number">2</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-min-voltage = &lt;<span class="number">1200000</span> <span class="number">1800000</span> <span class="number">2800000</span> <span class="number">2800000</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-max-voltage = &lt;<span class="number">1200000</span> <span class="number">1800000</span> <span class="number">2800000</span> <span class="number">2800000</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-op-mode = &lt;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-gpios-index = &lt;<span class="number">99</span> <span class="number">99</span> <span class="number">2</span> <span class="number">99</span>&gt;;</span><br><span class="line">        </span><br><span class="line">        pinctrl-names = <span class="string">"cam_default"</span>, <span class="string">"cam_suspend"</span>;</span><br><span class="line">        pinctrl-<span class="number">0</span> = &lt;&amp;cam_sensor_mclk1_default &amp;cam_sensor_front_default&gt;;</span><br><span class="line">        pinctrl-<span class="number">1</span> = &lt;&amp;cam_sensor_mclk1_sleep &amp;cam_sensor_front_sleep&gt;;</span><br><span class="line"></span><br><span class="line">        gpios = &lt;&amp;msm_gpio <span class="number">27</span> <span class="number">0</span>&gt;,</span><br><span class="line">            &lt;&amp;msm_gpio <span class="number">28</span> <span class="number">0</span>&gt;,</span><br><span class="line">            &lt;&amp;msm_gpio <span class="number">8</span> <span class="number">0</span>&gt;; </span><br><span class="line">        qcom,gpio-reset = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        qcom,gpio-custom1 = &lt;<span class="number">2</span>&gt;; </span><br><span class="line">        qcom,gpio-req-tbl-num = &lt;<span class="number">0</span> <span class="number">1</span> <span class="number">2</span>&gt;;</span><br><span class="line">        qcom,gpio-req-tbl-flags = &lt;<span class="number">1</span> <span class="number">0</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,gpio-req-tbl-label = <span class="string">"CAMIF_MCLK"</span>,</span><br><span class="line">        <span class="string">"CAM_RST"</span>,</span><br><span class="line">        <span class="string">"CAM_SEL"</span>; </span><br><span class="line"></span><br><span class="line">        qcom,csi-lane-assign = &lt;<span class="number">0x0004</span>&gt;;</span><br><span class="line">        qcom,csi-lane-mask = &lt;<span class="number">0x18</span>&gt;;</span><br><span class="line">        qcom,sensor-position = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        qcom,cci-master = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        status = <span class="string">"ok"</span>;</span><br><span class="line">        clocks = &lt;&amp;clock_gcc clk_mclk1_clk_src&gt;,</span><br><span class="line">                 &lt;&amp;clock_gcc clk_gcc_camss_mclk1_clk&gt;;</span><br><span class="line">        clock-names = <span class="string">"cam_src_clk"</span>, <span class="string">"cam_clk"</span>;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">qcom,camera@<span class="number">1</span> {</span><br><span class="line">        cell-index = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        compatible = <span class="string">&quot;xxx,s5k5e_xxx&quot;</span>;</span><br><span class="line">        reg = &lt;<span class="number">0x20</span>&gt;;</span><br><span class="line">        qcom,slave-id = &lt;<span class="number">0x20</span> <span class="number">0x0000</span> <span class="number">0x5E20</span>&gt;;</span><br><span class="line">        qcom,csiphy-sd-index = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        qcom,csid-sd-index = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        qcom,mount-angle = &lt;<span class="number">270</span>&gt;;</span><br><span class="line">        qcom,sensor-name = <span class="string">&quot;s5k5e_xxx&quot;</span>;</span><br><span class="line">        cam_vdig-supply = &lt;&amp;ncp6924_ldo3&gt;;</span><br><span class="line">        cam_vio-supply = &lt;&amp;ncp6924_ldo4&gt;;</span><br><span class="line">        cam_vana-supply = &lt;&amp;msm_gpio <span class="number">8</span> <span class="number">0</span>&gt;;</span><br><span class="line">        cam_vaf-supply = &lt;&amp;ncp6924_ldo1&gt;;</span><br><span class="line">        qcom,cam-vreg-name = <span class="string">&quot;cam_vdig&quot;</span>, <span class="string">&quot;cam_vio&quot;</span>, <span class="string">&quot;cam_vana&quot;</span>,<span class="string">&quot;cam_vaf&quot;</span>;</span><br><span class="line">        qcom,cam-vreg-type = &lt;<span class="number">0</span> <span class="number">0</span> <span class="number">2</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-min-voltage = &lt;<span class="number">1200000</span> <span class="number">1800000</span> <span class="number">2800000</span> <span class="number">2800000</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-max-voltage = &lt;<span class="number">1200000</span> <span class="number">1800000</span> <span class="number">2800000</span> <span class="number">2800000</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-op-mode = &lt;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-gpios-index = &lt;<span class="number">99</span> <span class="number">99</span> <span class="number">2</span> <span class="number">99</span>&gt;;</span><br><span class="line">        </span><br><span class="line">        pinctrl-names = <span class="string">&quot;cam_default&quot;</span>, <span class="string">&quot;cam_suspend&quot;</span>;</span><br><span class="line">        pinctrl-<span class="number">0</span> = &lt;&amp;cam_sensor_mclk1_default &amp;cam_sensor_front_default&gt;;</span><br><span class="line">        pinctrl-<span class="number">1</span> = &lt;&amp;cam_sensor_mclk1_sleep &amp;cam_sensor_front_sleep&gt;;</span><br><span class="line"></span><br><span class="line">        gpios = &lt;&amp;msm_gpio <span class="number">27</span> <span class="number">0</span>&gt;,</span><br><span class="line">            &lt;&amp;msm_gpio <span class="number">28</span> <span class="number">0</span>&gt;,</span><br><span class="line">            &lt;&amp;msm_gpio <span class="number">8</span> <span class="number">0</span>&gt;; </span><br><span class="line">        qcom,gpio-reset = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        qcom,gpio-custom1 = &lt;<span class="number">2</span>&gt;; </span><br><span class="line">        qcom,gpio-req-tbl-num = &lt;<span class="number">0</span> <span class="number">1</span> <span class="number">2</span>&gt;;</span><br><span class="line">        qcom,gpio-req-tbl-flags = &lt;<span class="number">1</span> <span class="number">0</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,gpio-req-tbl-label = <span class="string">&quot;CAMIF_MCLK&quot;</span>,</span><br><span class="line">        <span class="string">&quot;CAM_RST&quot;</span>,</span><br><span class="line">        <span class="string">&quot;CAM_SEL&quot;</span>; </span><br><span class="line"></span><br><span class="line">        qcom,csi-lane-assign = &lt;<span class="number">0x0004</span>&gt;;</span><br><span class="line">        qcom,csi-lane-mask = &lt;<span class="number">0x18</span>&gt;;</span><br><span class="line">        qcom,sensor-position = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        qcom,cci-master = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        status = <span class="string">&quot;ok&quot;</span>;</span><br><span class="line">        clocks = &lt;&amp;clock_gcc clk_mclk1_clk_src&gt;,</span><br><span class="line">                 &lt;&amp;clock_gcc clk_gcc_camss_mclk1_clk&gt;;</span><br><span class="line">        clock-names = <span class="string">&quot;cam_src_clk&quot;</span>, <span class="string">&quot;cam_clk&quot;</span>;</span><br><span class="line">    };</span><br></pre></td></tr></table></figure></p>
 <p>sensor driver
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> msm_sensor_power_setting s5k5e_htc_power_setting[] = &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VAF,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VIO,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        .seq_type = SENSOR_GPIO,</span><br><span class="line">        .seq_val = SENSOR_GPIO_CUSTOM1,<span class="comment">//GPIO 8 , cam analog</span></span><br><span class="line">        .config_val = GPIO_OUT_HIGH,</span><br><span class="line">        .delay = <span class="number">1</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VDIG,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        .seq_type = SENSOR_GPIO,</span><br><span class="line">        .seq_val = SENSOR_GPIO_RESET,<span class="comment">//GPIO 28</span></span><br><span class="line">        .config_val = GPIO_OUT_HIGH,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        .seq_type = SENSOR_CLK,</span><br><span class="line">        .seq_val = SENSOR_CAM_MCLK, <span class="comment">//gpio 27</span></span><br><span class="line">        .config_val = <span class="number">0</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        .seq_type = SENSOR_I2C_MUX,</span><br><span class="line">        .seq_val = <span class="number">0</span>,</span><br><span class="line">        .config_val = <span class="number">0</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> msm_sensor_power_setting s5k5e_htc_power_setting[] = {</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VAF,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VIO,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_GPIO,</span><br><span class="line">        .seq_val = SENSOR_GPIO_CUSTOM1,<span class="comment">//GPIO 8 , cam analog</span></span><br><span class="line">        .config_val = GPIO_OUT_HIGH,</span><br><span class="line">        .delay = <span class="number">1</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VDIG,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_GPIO,</span><br><span class="line">        .seq_val = SENSOR_GPIO_RESET,<span class="comment">//GPIO 28</span></span><br><span class="line">        .config_val = GPIO_OUT_HIGH,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_CLK,</span><br><span class="line">        .seq_val = SENSOR_CAM_MCLK, <span class="comment">//gpio 27</span></span><br><span class="line">        .config_val = <span class="number">0</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_I2C_MUX,</span><br><span class="line">        .seq_val = <span class="number">0</span>,</span><br><span class="line">        .config_val = <span class="number">0</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">};</span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<h2 id="Trouble_shooting"><strong>Trouble shooting</strong></h2><ul>
-<li>flash image into semi device</li>
+<h2 id="Trouble shooting"><strong>Trouble shooting</strong></h2><ul>
+<li>flash image into semi device first time.</li>
 <li>enable uart log</li>
-<li>check if same sensor config include in dtsi. it will cause to read wrong config file.  </li>
+<li>check if sensor config which have same name that you are porting now include in dtsi. it will cause to read wrong config file.  </li>
 <li>csiphy1 open fail (only cisphy 0)</li>
 <li>if you port front cam first, you have to give it main cam id which is 0</li>
 </ul>
 ]]></content>
     <summary type="html">
     <![CDATA[<ul>
-<li>Sensor architecture</li>
+<li>Sensor architecture<ul>
 <li>Porting sensor</li>
 <li>Trouble shooting</li>
 </ul>
-<h2 id="Sensor_architecture"><strong>Sensor archit]]>
+</li>
+</ul>
+<h2 id="Sensor architecture"><strong>Se]]>
     </summary>
+    
+      <category term="Camera" scheme="http://yoursite.com/categories/Camera/"/>
     
   </entry>
   

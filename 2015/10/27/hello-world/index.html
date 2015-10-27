@@ -3,17 +3,72 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Wade Work Web</title>
+  <title>Camera Sensor porting on Qualcomm | Wade Work Web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Wade Work Web">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Sensor architecture
+Porting sensor
+Trouble shooting
+
+
+
+Sensor architecture
+kernel sapce
+
+
+v4l2 framework
+msm.c 
+
+Register video-device / v4l2 device
+
+msm_sensor.c
+
+read dtsi config
+struct msm_sensor_c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Camera Sensor porting on Qualcomm">
+<meta property="og:url" content="http://yoursite.com/2015/10/27/hello-world/index.html">
 <meta property="og:site_name" content="Wade Work Web">
-<meta property="og:description">
+<meta property="og:description" content="Sensor architecture
+Porting sensor
+Trouble shooting
+
+
+
+Sensor architecture
+kernel sapce
+
+
+v4l2 framework
+msm.c 
+
+Register video-device / v4l2 device
+
+msm_sensor.c
+
+read dtsi config
+struct msm_sensor_c">
+<meta property="og:updated_time" content="2015-10-27T05:47:12.042Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Wade Work Web">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Camera Sensor porting on Qualcomm">
+<meta name="twitter:description" content="Sensor architecture
+Porting sensor
+Trouble shooting
+
+
+
+Sensor architecture
+kernel sapce
+
+
+v4l2 framework
+msm.c 
+
+Register video-device / v4l2 device
+
+msm_sensor.c
+
+read dtsi config
+struct msm_sensor_c">
   
     <link rel="alternative" href="/atom.xml" title="Wade Work Web" type="application/atom+xml">
   
@@ -120,80 +175,7 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-flash-calibration" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/27/flash-calibration/" class="article-date">
-  	<time datetime="2015-10-27T05:50:55.000Z" itemprop="datePublished">2015-10-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/27/flash-calibration/">Flash Calibration</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>Calibration architecure<ul>
-<li>Trouble shooting</li>
-</ul>
-</li>
-</ul>
-<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><p>New a CameraContext which inherit from CameraListener.
-Then call Camera::connect to connect to CameraService.
-You can use full camera function now.</p>
-<p>Put device on top of dark box.
-Run falsh calibration command to get a raw image
-(callback postData and get bayer-qcom-10gbrg buffer) by taking picture.</p>
-<p>dump 8bit image from 10bit image.
-select 1/6 center area to calculate the r,g,b gain</p>
-<h2 id="Trouble shooting"><strong>Trouble shooting</strong></h2><ul>
-<li>raw image have a black area on top of picture duo to disable frame-skip.</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Camera/">Camera</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2015/10/27/hello-world/" class="article-date">
@@ -209,12 +191,23 @@ select 1/6 center area to calculate the r,g,b gain</p>
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/27/hello-world/">Camera Sensor porting on Qualcomm</a>
+    <h1 class="article-title" itemprop="name">
+      Camera Sensor porting on Qualcomm
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Camera/">Camera</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -320,31 +313,46 @@ static int32_t sensor_process(void *sctrl,
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Camera/">Camera</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/10/27/flash-calibration/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Flash Calibration
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
 
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
 
 
-  
-  
 </div>
       <footer id="footer">
   <div class="outer">
@@ -368,8 +376,8 @@ static int32_t sensor_process(void *sctrl,
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
