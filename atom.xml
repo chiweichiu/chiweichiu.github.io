@@ -45,12 +45,12 @@
     <link href="http://yoursite.com/2015/10/27/chromium-input-system/"/>
     <id>http://yoursite.com/2015/10/27/chromium-input-system/</id>
     <published>2015-10-27T12:16:18.000Z</published>
-    <updated>2015-10-27T13:09:34.874Z</updated>
-    <content type="html"><![CDATA[<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Alice-&gt;Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob--&gt;Alice: I am good thanks!</span><br></pre></td></tr></table></figure>]]></content>
+    <updated>2015-10-28T12:17:47.071Z</updated>
+    <content type="html"><![CDATA[<p><img src="/image/chromium_input_system.jpg" alt="chromium input system"></p>
+]]></content>
     <summary type="html">
-    <![CDATA[<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="li]]>
+    <![CDATA[<p><img src="/image/chromium_input_system.jpg" alt="chromium input system"></p>
+]]>
     </summary>
     
       <category term="Chromium" scheme="http://yoursite.com/categories/Chromium/"/>
