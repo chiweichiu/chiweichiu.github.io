@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-10-27T11:02:32.846Z</updated>
+  <updated>2015-10-28T12:05:26.851Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,11 +15,53 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[note]]></title>
+    <link href="http://yoursite.com/2015/10/28/note/"/>
+    <id>http://yoursite.com/2015/10/28/note/</id>
+    <published>2015-10-28T11:57:04.000Z</published>
+    <updated>2015-10-28T12:05:26.851Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>kernel panic</p>
+</blockquote>
+<p>Call trace:
+[<ffffffc0007aa97c>] msm_actuator_move_focus+0x184/0x418</ffffffc0007aa97c></p>
+<p>addr2line -i -f -e vmlinux ffffffc0007aa97c</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>kernel panic</p>
+</blockquote>
+<p>Call trace:
+[<ffffffc0007aa97c>] msm_actuator_move_focus+0x184/0x418</ffffffc0007aa97c></p]]>
+    </summary>
+    
+      <category term="Camera" scheme="http://yoursite.com/categories/Camera/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[chromium input system]]></title>
+    <link href="http://yoursite.com/2015/10/27/chromium-input-system/"/>
+    <id>http://yoursite.com/2015/10/27/chromium-input-system/</id>
+    <published>2015-10-27T12:16:18.000Z</published>
+    <updated>2015-10-27T13:09:34.874Z</updated>
+    <content type="html"><![CDATA[<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Alice-&gt;Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob--&gt;Alice: I am good thanks!</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="li]]>
+    </summary>
+    
+      <category term="Chromium" scheme="http://yoursite.com/categories/Chromium/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Camera Calibration]]></title>
     <link href="http://yoursite.com/2015/10/27/flash-calibration/"/>
     <id>http://yoursite.com/2015/10/27/flash-calibration/</id>
     <published>2015-10-27T05:50:55.000Z</published>
-    <updated>2015-10-27T11:02:32.846Z</updated>
+    <updated>2015-10-27T11:03:14.378Z</updated>
     <content type="html"><![CDATA[<h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><blockquote>
 <p>flash calibration</p>
 </blockquote>
