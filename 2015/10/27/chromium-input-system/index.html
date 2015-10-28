@@ -5,17 +5,29 @@
   
   <title>chromium input system | Wade Work Web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="Case 1
+
+&amp;#x5982;&amp;#x679C;&amp;#x6C92;&amp;#x6709; addEventListener&amp;#x53BB;&amp;#x807D;touch event&amp;#x7B49;
+.1 touch event&amp;#x9032;&amp;#x4F86;
+.2 &amp;#x56E0;&amp;#x70BA;&amp;#x6C92;&amp;#x6709;handler&amp;#x6240;&amp;#x4EE5;&amp;#x76F4;&amp;#x63A5;&amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="chromium input system">
 <meta property="og:url" content="http://yoursite.com/2015/10/27/chromium-input-system/index.html">
 <meta property="og:site_name" content="Wade Work Web">
-<meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/image/chromium_input_system.jpg">
-<meta property="og:updated_time" content="2015-10-28T12:17:47.071Z">
+<meta property="og:description" content="Case 1
+
+&amp;#x5982;&amp;#x679C;&amp;#x6C92;&amp;#x6709; addEventListener&amp;#x53BB;&amp;#x807D;touch event&amp;#x7B49;
+.1 touch event&amp;#x9032;&amp;#x4F86;
+.2 &amp;#x56E0;&amp;#x70BA;&amp;#x6C92;&amp;#x6709;handler&amp;#x6240;&amp;#x4EE5;&amp;#x76F4;&amp;#x63A5;&amp;#">
+<meta property="og:image" content="https://drive.google.com/uc?id=0B64ey7dy3ylWYVlGTE8zYXlCUlU">
+<meta property="og:updated_time" content="2015-10-28T13:18:00.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chromium input system">
-<meta name="twitter:description">
+<meta name="twitter:description" content="Case 1
+
+&amp;#x5982;&amp;#x679C;&amp;#x6C92;&amp;#x6709; addEventListener&amp;#x53BB;&amp;#x807D;touch event&amp;#x7B49;
+.1 touch event&amp;#x9032;&amp;#x4F86;
+.2 &amp;#x56E0;&amp;#x70BA;&amp;#x6C92;&amp;#x6709;handler&amp;#x6240;&amp;#x4EE5;&amp;#x76F4;&amp;#x63A5;&amp;#">
   
     <link rel="alternative" href="/atom.xml" title="Wade Work Web" type="application/atom+xml">
   
@@ -159,8 +171,116 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/image/chromium_input_system.jpg" alt="chromium input system"></p>
+        <p><img src="https://drive.google.com/uc?id=0B64ey7dy3ylWYVlGTE8zYXlCUlU" alt="chromium input system"></p>
+<blockquote>
+<p><strong>Case 1</strong></p>
+</blockquote>
+<p>&#x5982;&#x679C;&#x6C92;&#x6709; addEventListener&#x53BB;&#x807D;touch event&#x7B49;</p>
+<p>.1 touch event&#x9032;&#x4F86;</p>
+<p>.2 &#x56E0;&#x70BA;&#x6C92;&#x6709;handler&#x6240;&#x4EE5;&#x76F4;&#x63A5;&#x8655;&#x7406;touch event ACK</p>
+<p>.3 ACK&#x88E1;&#x628A;&#x5B58;&#x4E0B;&#x4F86;&#x7684;gesture&#x9001;&#x9032;renderer process&#x7684;compositor thread</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputRouterImpl::OfferToRenderer {
+    Send(new InputMsg_HandleInputEvent
+}
 
+InputHandlerProxy::HandleInputEvent {
+
+}</span><br></pre></td></tr></table></figure>
+<p>.4 &#x5982;&#x679C;compositor thread&#x6C92;&#x8655;&#x7406;&#x9001;&#x9032;renderer process&#x7684;CrRenderMain thread</p>
+<p>.5 &#x8655;&#x7406;gesture ACK</p>
+<blockquote>
+<p><strong>Case 2</strong></p>
+</blockquote>
+<p>&#x6709;&#x807D;touchevent&#x7684;&#x8A71;</p>
+<p>.1 parse &#x7DB2;&#x9801;&#x6642;has handler&#x88AB;&#x8A2D;&#x8D77;&#x4F86;</p>
+<p>.2 touch event&#x9032;&#x4F86;</p>
+<p>.3 trigger timer</p>
+<p>.4 touch event&#x9001;&#x5230;renderer process&#x7684;compositor thread</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputHandlerProxy::EventDisposition InputHandlerProxy::HandleInputEvent(
+    const WebInputEvent&amp; event) {
+&#x2026;&#x2026;..
+  if (event.type == WebInputEvent::MouseWheel) {
+  } else if (event.type == WebInputEvent::GestureScrollBegin) {
+  } else if (event.type == WebInputEvent::GestureScrollUpdate) {
+  } else if (event.type == WebInputEvent::GestureScrollEnd) {
+  } else if (event.type == WebInputEvent::GesturePinchBegin) {
+  } else if (event.type == WebInputEvent::GesturePinchEnd) {
+  } else if (event.type == WebInputEvent::GesturePinchUpdate) {
+  } else if (event.type == WebInputEvent::GestureFlingStart) {
+  } else if (event.type == WebInputEvent::GestureFlingCancel) {
+  } else if (event.type == WebInputEvent::TouchStart) {
+  } else if (WebInputEvent::isKeyboardEventType(event.type)) {
+  } else if (event.type == WebInputEvent::MouseMove) {
+  } else if (event.type == WebInputEvent::GestureDoubleTap) { // handle double tap on our own for responsiveness
+}</span><br></pre></td></tr></table></figure>
+<p>.5 &#x5982;&#x679C;&#x6C92;&#x6709;&#x8655;&#x7406;&#x5C31;&#x9001;&#x5230; CrRenderMain thread&#x4E1F;&#x7D66;V8&#x8655;&#x7406;</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
+                                      ui::LatencyInfo latency_info,
+                                      bool is_keyboard_shortcut) {
+
+bool EventHandler::handleTouchEvent(const PlatformTouchEvent&amp; event)
+{
+&#x2026;..
+            touchEventTarget-&gt;toNode()-&gt;dispatchTouchEvent(touchEvent.get());
+            swallowedEvent = swallowedEvent || touchEvent-&gt;defaultPrevented() || touchEvent-&gt;defaultHandled();
+
+void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
+                                      ui::LatencyInfo latency_info,
+                                      bool is_keyboard_shortcut) {
+
+    scoped_ptr&lt;IPC::Message&gt; response(
+        new InputHostMsg_HandleInputEvent_ACK(routing_id_,
+                                              input_event-&gt;type,
+                                              ack_result,
+                                              latency_info));
+      Send(response.release());</span><br></pre></td></tr></table></figure>
+<p>.6 touch event ACK</p>
+<p>.7 &#x53D6;gesture </p>
+<p><em>&#x5982;&#x679C;&#x6C92;&#x6709;preventDefault</em></p>
+<p>.8 gesture&#x9001;&#x9032; renderer process&#x7684;compositor thread</p>
+<p>.9 &#x5982;&#x679C;&#x6C92;&#x6709;&#x8655;&#x7406;&#x518D;&#x9001;&#x9032;CrRenderMain thread</p>
+<p>.10 gesture ACK</p>
+<p><em>&#x5982;&#x679C;&#x6709;preventDefault</em></p>
+<p>.8 &#x4E0D;send gesture</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
+                                      ui::LatencyInfo latency_info,
+                                      bool is_keyboard_shortcut) {
+
+  // Unconsumed touchmove acks should never be throttled as they&apos;re required to
+  // dispatch compositor-handled scroll gestures.
+  bool event_type_can_be_rate_limited =
+      input_event-&gt;type == WebInputEvent::MouseMove ||
+      input_event-&gt;type == WebInputEvent::MouseWheel ||
+      (input_event-&gt;type == WebInputEvent::TouchMove &amp;&amp;
+       ack_result == INPUT_EVENT_ACK_STATE_CONSUMED);
+
+  if (!WebInputEventTraits::IgnoresAckDisposition(input_event-&gt;type)) {
+    scoped_ptr&lt;IPC::Message&gt; response(
+        new InputHostMsg_HandleInputEvent_ACK(routing_id_,
+                                              input_event-&gt;type,
+                                              ack_result,
+                                              latency_info));
+    if (rate_limiting_wanted &amp;&amp; event_type_can_be_rate_limited &amp;&amp;
+        frame_pending &amp;&amp; !is_hidden_) {
+      // We want to rate limit the input events in this case, so we&apos;ll wait for
+      // painting to finish before ACKing this message.
+      TRACE_EVENT_INSTANT0(&quot;renderer&quot;,
+        &quot;RenderWidget::OnHandleInputEvent ack throttled&quot;,
+        TRACE_EVENT_SCOPE_THREAD);
+      LOG(ERROR)&lt;&lt;&quot;[renderer] RenderWidget::OnHandleInputEvent ack throttled&quot;;
+      if (pending_input_event_ack_) {
+        // As two different kinds of events could cause us to postpone an ack
+        // we send it now, if we have one pending. The Browser should never
+        // send us the same kind of event we are delaying the ack for.
+        Send(pending_input_event_ack_.release());
+      }
+      pending_input_event_ack_ = response.Pass();
+      if (compositor_)
+        compositor_-&gt;NotifyInputThrottledUntilCommit();
+    } else {
+      Send(response.release());
+    }
+  }</span><br></pre></td></tr></table></figure>
       
     </div>
     
