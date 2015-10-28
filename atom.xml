@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-10-28T12:06:28.851Z</updated>
+  <updated>2015-10-28T12:07:29.923Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,12 +19,12 @@
     <link href="http://yoursite.com/2015/10/28/note/"/>
     <id>http://yoursite.com/2015/10/28/note/</id>
     <published>2015-10-28T11:57:04.000Z</published>
-    <updated>2015-10-28T12:06:28.851Z</updated>
+    <updated>2015-10-28T12:07:29.923Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>kernel panic</p>
 </blockquote>
 <p>Call trace:</p>
-<p>[ &lt; ffffffc0007aa97c &gt; ] msm_actuator_move_focus+0x184/0x418</p>
+<p>ffffffc0007aa97c  msm_actuator_move_focus+0x184/0x418</p>
 <p>addr2line -i -f -e vmlinux ffffffc0007aa97c</p>
 ]]></content>
     <summary type="html">
@@ -32,8 +32,8 @@
 <p>kernel panic</p>
 </blockquote>
 <p>Call trace:</p>
-<p>[ &lt; ffffffc0007aa97c &gt; ] msm_actuator_move_focus+0x184/0x418</p>
-]]>
+<p>ffffffc0007aa97c  msm_actuator_move_focus+0x184/0x418</p>
+<p>addr2line ]]>
     </summary>
     
       <category term="Camera" scheme="http://yoursite.com/categories/Camera/"/>
