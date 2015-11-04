@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-10-28T12:07:29.923Z</updated>
+  <updated>2015-11-04T08:47:17.545Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,240 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[good link]]></title>
+    <link href="http://yoursite.com/2015/11/04/good-link/"/>
+    <id>http://yoursite.com/2015/11/04/good-link/</id>
+    <published>2015-11-04T08:43:03.000Z</published>
+    <updated>2015-11-04T08:47:17.545Z</updated>
+    <content type="html"><![CDATA[<p>Arduino&#x5E95;&#x5C64;&#x539F;&#x59CB;&#x78BC;&#x89E3;&#x6790;</p>
+<ul>
+<li><a href="http://www.slideshare.net/roboard/arduino-38558018" target="_blank" rel="external">Arduino source code</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Arduino&#x5E95;&#x5C64;&#x539F;&#x59CB;&#x78BC;&#x89E3;&#x6790;</p>
+<ul>
+<li><a href="http://www.slideshare.net/roboard/arduino-38558018"]]>
+    </summary>
+    
+      <category term="data" scheme="http://yoursite.com/categories/data/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[actuator sub module]]></title>
+    <link href="http://yoursite.com/2015/11/04/actuator-sub-module/"/>
+    <id>http://yoursite.com/2015/11/04/actuator-sub-module/</id>
+    <published>2015-11-04T03:44:31.000Z</published>
+    <updated>2015-11-04T04:03:33.617Z</updated>
+    <content type="html"><![CDATA[<p>module sensor contains many submodules such as sensor,</p>
+<p>chromatix,actuator,eeprom,led flash,strobe flash,cisphy,csid</p>
+<blockquote>
+<p>module_sensor.c</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">module_sensor_init_session
+{
+module_sensor_actuator_init_calibrate
+
+static boolean module_sensor_actuator_init_calibrate(
+    module_sensor_bundle_info_t *s_bundle)
+{
+    /* Get actuator name from sensor */
+    SENSOR_SUB_MODULE_PROCESS_EVENT(s_bundle, SUB_MODULE_SENSOR,
+        SENSOR_GET_ACTUATOR_NAME, &amp;a_name, rc);
+
+    /* Initialize the actuator */
+    SENSOR_SUB_MODULE_PROCESS_EVENT(s_bundle, SUB_MODULE_ACTUATOR,
+        ACTUATOR_INIT, a_name, rc);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>actuator.c</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t actuator_sub_module_init(sensor_func_tbl_t *func_tbl)
+{
+  func_tbl-&gt;open = actuator_open;
+  func_tbl-&gt;process = actuator_process;
+  func_tbl-&gt;close = actuator_close;
+
+static int32_t actuator_process(void *actuator_ctrl,
+  sensor_submodule_event_type_t event, void *data)
+{
+  case ACTUATOR_INIT:
+    rc = af_actuator_init(actuator_ctrl, data);
+
+static int32_t af_actuator_init(void *ptr, void* data)
+{
+  rc = af_actuator_power_up(af_actuator_ptr);
+  cfg.cfgtype = CFG_ACTUATOR_INIT;
+
+  /* Invoke the IOCTL to initialize the actuator */
+  rc = ioctl(af_actuator_ptr-&gt;fd, VIDIOC_MSM_ACTUATOR_CFG, &amp;cfg);
+  rc = actuator_load_lib(ptr, ACTUATOR_CAM_MODE_CAMERA);
+  rc = actuator_load_lib(ptr, ACTUATOR_CAM_MODE_CAMCORDER);    
+```    
+    
+&gt; msm_actuator.c (kernel space)
+   
+```code
+static long msm_actuator_subdev_ioctl(struct v4l2_subdev *sd,
+			unsigned int cmd, void *arg)
+{
+	case VIDIOC_MSM_ACTUATOR_CFG:
+		return msm_actuator_config(a_ctrl, argp);
+
+static int32_t msm_actuator_config(struct msm_actuator_ctrl_t *a_ctrl,
+	void __user *argp)
+{
+	case CFG_ACTUATOR_INIT:
+		rc = msm_actuator_init(a_ctrl);</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>module sensor contains many submodules such as sensor,</p>
+<p>chromatix,actuator,eeprom,led flash,strobe flash,cisphy,csid</p>
+<blockquot]]>
+    </summary>
+    
+      <category term="Camera" scheme="http://yoursite.com/categories/Camera/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[HDR flow]]></title>
+    <link href="http://yoursite.com/2015/10/29/HDR-flow/"/>
+    <id>http://yoursite.com/2015/10/29/HDR-flow/</id>
+    <published>2015-10-29T03:44:08.000Z</published>
+    <updated>2015-10-30T06:39:26.862Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>Camera Service start</p>
+</blockquote>
+<p>when camera service start,
+CameraService::onFirstRef()
+hw_get_module to connect real camera HAL such as system/lib/hw/camera.platform_id.so</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QCamera2HAK.cpp
+static hw_module_t camera_common = {
+    tag: HARDWARE_MODULE_TAG,
+    module_api_version: CAMERA_MODULE_API_VERSION_1_0,
+    hal_api_version: HARDWARE_HAL_API_VERSION,
+    id: CAMERA_HARDWARE_MODULE_ID,
+    name: &quot;QCamera Module&quot;,
+    author: &quot;Qualcomm Innovation Center Inc&quot;,
+    methods: &amp;qcamera::QCamera2Factory::mModuleMethods,
+};
+
+camera_module_t HAL_MODULE_INFO_SYM = {
+    common: camera_common,
+    get_number_of_cameras: qcamera::QCamera2Factory::get_number_of_cameras,
+    get_camera_info: qcamera::QCamera2Factory::get_camera_info,</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mm-caemra-daemon start</p>
+</blockquote>
+<p>Server.c</p>
+<blockquote>
+<p>open Camera</p>
+</blockquote>
+<p>jni:
+android_hardware_Camera_native_setup</p>
+<p>camera client:
+Camera::connect</p>
+<p>canera service:
+CameraService::connect</p>
+<p>client-&gt;initialize(mModule)
+{
+    mHardware = new CameraHardwareInterface(camera_device_name);
+    res = mHardware-&gt;initialize(module);</p>
+<p>status_t initialize(CameraModule <em>module)
+{
+    rc = module-&gt;open(mName.string(), (hw_device_t *</em>)&amp;mDevice);</p>
+<p>int CameraModule::open(const char<em> id, struct hw_device_t*</em> device) {
+    return filterOpenErrorCode(mModule-&gt;common.methods-&gt;open(&amp;mModule-&gt;common, id, device));
+}</p>
+<p>QCamera2Factory.cpp
+QCamera2Factory::camera_device_open</p>
+<p>int QCamera2Factory::cameraDeviceOpen(int camera_id,
+                    struct hw_device_t <em>*hw_device)
+{
+    QCamera2HardwareInterface </em>hw = new QCamera2HardwareInterface((uint32_t)camera_id);
+    rc = hw-&gt;openCamera(hw_device);</p>
+<p>int QCamera2HardwareInterface::openCamera()
+{
+    mCameraHandle = camera_open((uint8_t)mCameraId);
+    mCameraHandle-&gt;ops-&gt;register_event_notify(mCameraHandle-&gt;camera_handle,
+                                              camEvtHandle,
+                                              (void *) this);</p>
+<p>mm_camera_vtbl_t * camera_open(uint8_t camera_idx)
+{
+    cam_obj-&gt;vtbl.ops = &amp;mm_camera_ops;</p>
+<pre><code>rc = mm_camera_open<span class="list">(<span class="keyword">cam_obj</span>)</span><span class="comment">;</span>
+</code></pre><p>=========mm camera interface===============================================    </p>
+<p>int32_t mm_camera_open(mm_camera_obj_t *my_obj)
+{
+    my_obj-&gt;ctrl_fd = open(dev_name, O_RDWR | O_NONBLOCK);
+    my_obj-&gt;ds_fd = mm_camera_socket_create(cam_idx, MM_CAMERA_SOCK_TYPE_UDP);</p>
+<pre><code>mm_camer<span class="built_in">a_cmd</span>_thread_launch(&amp;my_obj-&gt;evt_thread,
+                            mm_camer<span class="built_in">a_dispatch</span>_app_event,
+                            (void *)my_obj)<span class="comment">;</span>
+
+mm_camer<span class="built_in">a_poll</span>_thread_launch(&amp;my_obj-&gt;evt_poll_thread,MM_CAMER<span class="built_in">A_POLL</span>_TYPE_EVT)<span class="comment">;</span>
+</code></pre><p>=========kernel===============================================    </p>
+<p>static const struct file_operations v4l2_fops = {
+    .owner = THIS_MODULE,
+    .read = v4l2_read,
+    .write = v4l2_write,
+    .open = v4l2_open,
+    .get_unmapped_area = v4l2_get_unmapped_area,
+    .mmap = v4l2_mmap,
+    .unlocked_ioctl = v4l2_ioctl,</p>
+<p>#ifdef CONFIG_COMPAT
+    .compat_ioctl = v4l2_compat_ioctl32,</p>
+<p>#endif
+    .release = v4l2_release,
+    .poll = v4l2_poll,
+    .llseek = no_llseek,
+};</p>
+<p>static int v4l2_open(struct inode <em>inode, struct file </em>filp)
+{
+    ret = vdev-&gt;fops-&gt;open(filp);</p>
+<p>Camera.c<br>static struct v4l2_file_operations camera_v4l2_fops = {
+    .owner   = THIS_MODULE,
+    .open    = camera_v4l2_open,
+    .poll    = camera_v4l2_poll,
+    .release = camera_v4l2_close,
+    .ioctl   = video_ioctl2,</p>
+<p>#ifdef CONFIG_COMPAT
+    .compat_ioctl32 = camera_v4l2_compat_ioctl,</p>
+<p>#endif
+};    </p>
+<p>static int camera_v4l2_open(struct file *filep)
+{
+    rc = camera_v4l2_fh_open(filep);</p>
+<p>static int camera_v4l2_fh_open(struct file *filep)
+{
+    v4l2_fh_init(&amp;sp-&gt;fh, pvdev-&gt;vdev);
+    v4l2_fh_add(&amp;sp-&gt;fh);</p>
+<p>const struct v4l2_file_operations v4l2_subdev_fops = {
+    .owner = THIS_MODULE,
+    .open = subdev_open,
+    .unlocked_ioctl = subdev_ioctl,
+    .release = subdev_close,
+    .poll = subdev_poll,
+};</p>
+<blockquote>
+<p>start Preview</p>
+<p>take Picture</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>Camera Service start</p>
+</blockquote>
+<p>when camera service start,
+CameraService::onFirstRef()
+hw_get_module to connect re]]>
+    </summary>
+    
+      <category term="Camera" scheme="http://yoursite.com/categories/Camera/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[note]]></title>

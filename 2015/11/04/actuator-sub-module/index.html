@@ -3,30 +3,39 @@
 <head>
   <meta charset="utf-8">
   
-  <title>note | Wade Work Web</title>
+  <title>actuator sub module | Wade Work Web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="kernel panic
+  <meta name="description" content="module sensor contains many submodules such as sensor,
+chromatix,actuator,eeprom,led flash,strobe flash,cisphy,csid
 
-Call trace:
-ffffffc0007aa97c  msm_actuator_move_focus+0x184/0x418
-addr2line -i -f -e vmlinux ffffffc0007aa97c">
+module_sensor.c
+
+1module_sensor_init_session
+{
+module_sensor_actuator_init_calibrat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="note">
-<meta property="og:url" content="http://yoursite.com/2015/10/28/note/index.html">
+<meta property="og:title" content="actuator sub module">
+<meta property="og:url" content="http://yoursite.com/2015/11/04/actuator-sub-module/index.html">
 <meta property="og:site_name" content="Wade Work Web">
-<meta property="og:description" content="kernel panic
+<meta property="og:description" content="module sensor contains many submodules such as sensor,
+chromatix,actuator,eeprom,led flash,strobe flash,cisphy,csid
 
-Call trace:
-ffffffc0007aa97c  msm_actuator_move_focus+0x184/0x418
-addr2line -i -f -e vmlinux ffffffc0007aa97c">
-<meta property="og:updated_time" content="2015-10-28T12:07:29.923Z">
+module_sensor.c
+
+1module_sensor_init_session
+{
+module_sensor_actuator_init_calibrat">
+<meta property="og:updated_time" content="2015-11-04T04:03:33.617Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="note">
-<meta name="twitter:description" content="kernel panic
+<meta name="twitter:title" content="actuator sub module">
+<meta name="twitter:description" content="module sensor contains many submodules such as sensor,
+chromatix,actuator,eeprom,led flash,strobe flash,cisphy,csid
 
-Call trace:
-ffffffc0007aa97c  msm_actuator_move_focus+0x184/0x418
-addr2line -i -f -e vmlinux ffffffc0007aa97c">
+module_sensor.c
+
+1module_sensor_init_session
+{
+module_sensor_actuator_init_calibrat">
   
     <link rel="alternative" href="/atom.xml" title="Wade Work Web" type="application/atom+xml">
   
@@ -133,11 +142,11 @@ addr2line -i -f -e vmlinux ffffffc0007aa97c">
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-note" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-actuator-sub-module" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/10/28/note/" class="article-date">
-  	<time datetime="2015-10-28T11:57:04.000Z" itemprop="datePublished">2015-10-28</time>
+      <a href="/2015/11/04/actuator-sub-module/" class="article-date">
+  	<time datetime="2015-11-04T03:44:31.000Z" itemprop="datePublished">2015-11-04</time>
 </a>
     </div>
   
@@ -150,7 +159,7 @@ addr2line -i -f -e vmlinux ffffffc0007aa97c">
         
   
     <h1 class="article-title" itemprop="name">
-      note
+      actuator sub module
     </h1>
   
 
@@ -170,13 +179,65 @@ addr2line -i -f -e vmlinux ffffffc0007aa97c">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>kernel panic</p>
+        <p>module sensor contains many submodules such as sensor,</p>
+<p>chromatix,actuator,eeprom,led flash,strobe flash,cisphy,csid</p>
+<blockquote>
+<p>module_sensor.c</p>
 </blockquote>
-<p>Call trace:</p>
-<p>ffffffc0007aa97c  msm_actuator_move_focus+0x184/0x418</p>
-<p>addr2line -i -f -e vmlinux ffffffc0007aa97c</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">module_sensor_init_session
+{
+module_sensor_actuator_init_calibrate
 
+static boolean module_sensor_actuator_init_calibrate(
+    module_sensor_bundle_info_t *s_bundle)
+{
+    /* Get actuator name from sensor */
+    SENSOR_SUB_MODULE_PROCESS_EVENT(s_bundle, SUB_MODULE_SENSOR,
+        SENSOR_GET_ACTUATOR_NAME, &amp;a_name, rc);
+
+    /* Initialize the actuator */
+    SENSOR_SUB_MODULE_PROCESS_EVENT(s_bundle, SUB_MODULE_ACTUATOR,
+        ACTUATOR_INIT, a_name, rc);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>actuator.c</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t actuator_sub_module_init(sensor_func_tbl_t *func_tbl)
+{
+  func_tbl-&gt;open = actuator_open;
+  func_tbl-&gt;process = actuator_process;
+  func_tbl-&gt;close = actuator_close;
+
+static int32_t actuator_process(void *actuator_ctrl,
+  sensor_submodule_event_type_t event, void *data)
+{
+  case ACTUATOR_INIT:
+    rc = af_actuator_init(actuator_ctrl, data);
+
+static int32_t af_actuator_init(void *ptr, void* data)
+{
+  rc = af_actuator_power_up(af_actuator_ptr);
+  cfg.cfgtype = CFG_ACTUATOR_INIT;
+
+  /* Invoke the IOCTL to initialize the actuator */
+  rc = ioctl(af_actuator_ptr-&gt;fd, VIDIOC_MSM_ACTUATOR_CFG, &amp;cfg);
+  rc = actuator_load_lib(ptr, ACTUATOR_CAM_MODE_CAMERA);
+  rc = actuator_load_lib(ptr, ACTUATOR_CAM_MODE_CAMCORDER);    
+```    
+    
+&gt; msm_actuator.c (kernel space)
+   
+```code
+static long msm_actuator_subdev_ioctl(struct v4l2_subdev *sd,
+			unsigned int cmd, void *arg)
+{
+	case VIDIOC_MSM_ACTUATOR_CFG:
+		return msm_actuator_config(a_ctrl, argp);
+
+static int32_t msm_actuator_config(struct msm_actuator_ctrl_t *a_ctrl,
+	void __user *argp)
+{
+	case CFG_ACTUATOR_INIT:
+		rc = msm_actuator_init(a_ctrl);</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -185,18 +246,18 @@ addr2line -i -f -e vmlinux ffffffc0007aa97c">
     
 <nav id="article-nav">
   
-    <a href="/2015/10/29/HDR-flow/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/11/04/good-link/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          HDR flow
+          good link
         
       </div>
     </a>
   
   
-    <a href="/2015/10/27/chromium-input-system/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">chromium input system</div>
+    <a href="/2015/10/29/HDR-flow/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HDR flow</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
