@@ -122,6 +122,401 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-HDR-flow" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/29/HDR-flow/" class="article-date">
+  	<time datetime="2015-10-29T03:44:08.000Z" itemprop="datePublished">2015-10-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/29/HDR-flow/">HDR flow</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Camera Service start</p>
+</blockquote>
+<p>when camera service start,
+CameraService::onFirstRef()
+hw_get_module to connect real camera HAL such as system/lib/hw/camera.platform_id.so</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QCamera2HAK.cpp
+static hw_module_t camera_common = {
+    tag: HARDWARE_MODULE_TAG,
+    module_api_version: CAMERA_MODULE_API_VERSION_1_0,
+    hal_api_version: HARDWARE_HAL_API_VERSION,
+    id: CAMERA_HARDWARE_MODULE_ID,
+    name: &quot;QCamera Module&quot;,
+    author: &quot;Qualcomm Innovation Center Inc&quot;,
+    methods: &amp;qcamera::QCamera2Factory::mModuleMethods,
+};
+
+camera_module_t HAL_MODULE_INFO_SYM = {
+    common: camera_common,
+    get_number_of_cameras: qcamera::QCamera2Factory::get_number_of_cameras,
+    get_camera_info: qcamera::QCamera2Factory::get_camera_info,</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mm-caemra-daemon start</p>
+</blockquote>
+<p>Server.c</p>
+<blockquote>
+<p>open Camera</p>
+</blockquote>
+<p>jni:
+android_hardware_Camera_native_setup</p>
+<p>camera client:
+Camera::connect</p>
+<p>canera service:
+CameraService::connect</p>
+<p>client-&gt;initialize(mModule)
+{
+    mHardware = new CameraHardwareInterface(camera_device_name);
+    res = mHardware-&gt;initialize(module);</p>
+<p>status_t initialize(CameraModule <em>module)
+{
+    rc = module-&gt;open(mName.string(), (hw_device_t *</em>)&amp;mDevice);</p>
+<p>int CameraModule::open(const char<em> id, struct hw_device_t*</em> device) {
+    return filterOpenErrorCode(mModule-&gt;common.methods-&gt;open(&amp;mModule-&gt;common, id, device));
+}</p>
+<p>QCamera2Factory.cpp
+QCamera2Factory::camera_device_open</p>
+<p>int QCamera2Factory::cameraDeviceOpen(int camera_id,
+                    struct hw_device_t <em>*hw_device)
+{
+    QCamera2HardwareInterface </em>hw = new QCamera2HardwareInterface((uint32_t)camera_id);
+    rc = hw-&gt;openCamera(hw_device);</p>
+<p>int QCamera2HardwareInterface::openCamera()
+{
+    mCameraHandle = camera_open((uint8_t)mCameraId);
+    mCameraHandle-&gt;ops-&gt;register_event_notify(mCameraHandle-&gt;camera_handle,
+                                              camEvtHandle,
+                                              (void *) this);</p>
+<p>mm_camera_vtbl_t * camera_open(uint8_t camera_idx)
+{
+    cam_obj-&gt;vtbl.ops = &amp;mm_camera_ops;</p>
+<pre><code>rc = mm_camera_open<span class="list">(<span class="keyword">cam_obj</span>)</span><span class="comment">;</span>
+</code></pre><p>=========mm camera interface===============================================    </p>
+<p>int32_t mm_camera_open(mm_camera_obj_t *my_obj)
+{
+    my_obj-&gt;ctrl_fd = open(dev_name, O_RDWR | O_NONBLOCK);
+    my_obj-&gt;ds_fd = mm_camera_socket_create(cam_idx, MM_CAMERA_SOCK_TYPE_UDP);</p>
+<pre><code>mm_camer<span class="built_in">a_cmd</span>_thread_launch(&amp;my_obj-&gt;evt_thread,
+                            mm_camer<span class="built_in">a_dispatch</span>_app_event,
+                            (void *)my_obj)<span class="comment">;</span>
+
+mm_camer<span class="built_in">a_poll</span>_thread_launch(&amp;my_obj-&gt;evt_poll_thread,MM_CAMER<span class="built_in">A_POLL</span>_TYPE_EVT)<span class="comment">;</span>
+</code></pre><p>=========kernel===============================================    </p>
+<p>static const struct file_operations v4l2_fops = {
+    .owner = THIS_MODULE,
+    .read = v4l2_read,
+    .write = v4l2_write,
+    .open = v4l2_open,
+    .get_unmapped_area = v4l2_get_unmapped_area,
+    .mmap = v4l2_mmap,
+    .unlocked_ioctl = v4l2_ioctl,</p>
+<p>#ifdef CONFIG_COMPAT
+    .compat_ioctl = v4l2_compat_ioctl32,</p>
+<p>#endif
+    .release = v4l2_release,
+    .poll = v4l2_poll,
+    .llseek = no_llseek,
+};</p>
+<p>static int v4l2_open(struct inode <em>inode, struct file </em>filp)
+{
+    ret = vdev-&gt;fops-&gt;open(filp);</p>
+<p>Camera.c<br>static struct v4l2_file_operations camera_v4l2_fops = {
+    .owner   = THIS_MODULE,
+    .open    = camera_v4l2_open,
+    .poll    = camera_v4l2_poll,
+    .release = camera_v4l2_close,
+    .ioctl   = video_ioctl2,</p>
+<p>#ifdef CONFIG_COMPAT
+    .compat_ioctl32 = camera_v4l2_compat_ioctl,</p>
+<p>#endif
+};    </p>
+<p>static int camera_v4l2_open(struct file *filep)
+{
+    rc = camera_v4l2_fh_open(filep);</p>
+<p>static int camera_v4l2_fh_open(struct file *filep)
+{
+    v4l2_fh_init(&amp;sp-&gt;fh, pvdev-&gt;vdev);
+    v4l2_fh_add(&amp;sp-&gt;fh);</p>
+<p>const struct v4l2_file_operations v4l2_subdev_fops = {
+    .owner = THIS_MODULE,
+    .open = subdev_open,
+    .unlocked_ioctl = subdev_ioctl,
+    .release = subdev_close,
+    .poll = subdev_poll,
+};</p>
+<blockquote>
+<p>start Preview</p>
+<p>take Picture</p>
+</blockquote>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Camera/">Camera</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-note" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/28/note/" class="article-date">
+  	<time datetime="2015-10-28T11:57:04.000Z" itemprop="datePublished">2015-10-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/28/note/">note</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>kernel panic</p>
+</blockquote>
+<p>Call trace:</p>
+<p>ffffffc0007aa97c  msm_actuator_move_focus+0x184/0x418</p>
+<p>addr2line -i -f -e vmlinux ffffffc0007aa97c</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Camera/">Camera</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-chromium-input-system" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/27/chromium-input-system/" class="article-date">
+  	<time datetime="2015-10-27T12:16:18.000Z" itemprop="datePublished">2015-10-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/27/chromium-input-system/">chromium input system</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://drive.google.com/uc?id=0B64ey7dy3ylWYVlGTE8zYXlCUlU" alt="chromium input system"></p>
+<blockquote>
+<p><strong>Case 1</strong></p>
+</blockquote>
+<p>&#x5982;&#x679C;&#x6C92;&#x6709; addEventListener&#x53BB;&#x807D;touch event&#x7B49;</p>
+<p>.1 touch event&#x9032;&#x4F86;</p>
+<p>.2 &#x56E0;&#x70BA;&#x6C92;&#x6709;handler&#x6240;&#x4EE5;&#x76F4;&#x63A5;&#x8655;&#x7406;touch event ACK</p>
+<p>.3 ACK&#x88E1;&#x628A;&#x5B58;&#x4E0B;&#x4F86;&#x7684;gesture&#x9001;&#x9032;renderer process&#x7684;compositor thread</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputRouterImpl::OfferToRenderer {
+    Send(new InputMsg_HandleInputEvent
+}
+
+InputHandlerProxy::HandleInputEvent {
+
+}</span><br></pre></td></tr></table></figure>
+<p>.4 &#x5982;&#x679C;compositor thread&#x6C92;&#x8655;&#x7406;&#x9001;&#x9032;renderer process&#x7684;CrRenderMain thread</p>
+<p>.5 &#x8655;&#x7406;gesture ACK</p>
+<blockquote>
+<p><strong>Case 2</strong></p>
+</blockquote>
+<p>&#x6709;&#x807D;touchevent&#x7684;&#x8A71;</p>
+<p>.1 parse &#x7DB2;&#x9801;&#x6642;has handler&#x88AB;&#x8A2D;&#x8D77;&#x4F86;</p>
+<p>.2 touch event&#x9032;&#x4F86;</p>
+<p>.3 trigger timer</p>
+<p>.4 touch event&#x9001;&#x5230;renderer process&#x7684;compositor thread</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputHandlerProxy::EventDisposition InputHandlerProxy::HandleInputEvent(
+    const WebInputEvent&amp; event) {
+&#x2026;&#x2026;..
+  if (event.type == WebInputEvent::MouseWheel) {
+  } else if (event.type == WebInputEvent::GestureScrollBegin) {
+  } else if (event.type == WebInputEvent::GestureScrollUpdate) {
+  } else if (event.type == WebInputEvent::GestureScrollEnd) {
+  } else if (event.type == WebInputEvent::GesturePinchBegin) {
+  } else if (event.type == WebInputEvent::GesturePinchEnd) {
+  } else if (event.type == WebInputEvent::GesturePinchUpdate) {
+  } else if (event.type == WebInputEvent::GestureFlingStart) {
+  } else if (event.type == WebInputEvent::GestureFlingCancel) {
+  } else if (event.type == WebInputEvent::TouchStart) {
+  } else if (WebInputEvent::isKeyboardEventType(event.type)) {
+  } else if (event.type == WebInputEvent::MouseMove) {
+  } else if (event.type == WebInputEvent::GestureDoubleTap) { // handle double tap on our own for responsiveness
+}</span><br></pre></td></tr></table></figure>
+<p>.5 &#x5982;&#x679C;&#x6C92;&#x6709;&#x8655;&#x7406;&#x5C31;&#x9001;&#x5230; CrRenderMain thread&#x4E1F;&#x7D66;V8&#x8655;&#x7406;</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
+                                      ui::LatencyInfo latency_info,
+                                      bool is_keyboard_shortcut) {
+
+bool EventHandler::handleTouchEvent(const PlatformTouchEvent&amp; event)
+{
+&#x2026;..
+            touchEventTarget-&gt;toNode()-&gt;dispatchTouchEvent(touchEvent.get());
+            swallowedEvent = swallowedEvent || touchEvent-&gt;defaultPrevented() || touchEvent-&gt;defaultHandled();
+
+void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
+                                      ui::LatencyInfo latency_info,
+                                      bool is_keyboard_shortcut) {
+
+    scoped_ptr&lt;IPC::Message&gt; response(
+        new InputHostMsg_HandleInputEvent_ACK(routing_id_,
+                                              input_event-&gt;type,
+                                              ack_result,
+                                              latency_info));
+      Send(response.release());</span><br></pre></td></tr></table></figure>
+<p>.6 touch event ACK</p>
+<p>.7 &#x53D6;gesture </p>
+<p><em>&#x5982;&#x679C;&#x6C92;&#x6709;preventDefault</em></p>
+<p>.8 gesture&#x9001;&#x9032; renderer process&#x7684;compositor thread</p>
+<p>.9 &#x5982;&#x679C;&#x6C92;&#x6709;&#x8655;&#x7406;&#x518D;&#x9001;&#x9032;CrRenderMain thread</p>
+<p>.10 gesture ACK</p>
+<p><em>&#x5982;&#x679C;&#x6709;preventDefault</em></p>
+<p>.8 &#x4E0D;send gesture</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
+                                      ui::LatencyInfo latency_info,
+                                      bool is_keyboard_shortcut) {
+
+  // Unconsumed touchmove acks should never be throttled as they&apos;re required to
+  // dispatch compositor-handled scroll gestures.
+  bool event_type_can_be_rate_limited =
+      input_event-&gt;type == WebInputEvent::MouseMove ||
+      input_event-&gt;type == WebInputEvent::MouseWheel ||
+      (input_event-&gt;type == WebInputEvent::TouchMove &amp;&amp;
+       ack_result == INPUT_EVENT_ACK_STATE_CONSUMED);
+
+  if (!WebInputEventTraits::IgnoresAckDisposition(input_event-&gt;type)) {
+    scoped_ptr&lt;IPC::Message&gt; response(
+        new InputHostMsg_HandleInputEvent_ACK(routing_id_,
+                                              input_event-&gt;type,
+                                              ack_result,
+                                              latency_info));
+    if (rate_limiting_wanted &amp;&amp; event_type_can_be_rate_limited &amp;&amp;
+        frame_pending &amp;&amp; !is_hidden_) {
+      // We want to rate limit the input events in this case, so we&apos;ll wait for
+      // painting to finish before ACKing this message.
+      TRACE_EVENT_INSTANT0(&quot;renderer&quot;,
+        &quot;RenderWidget::OnHandleInputEvent ack throttled&quot;,
+        TRACE_EVENT_SCOPE_THREAD);
+      LOG(ERROR)&lt;&lt;&quot;[renderer] RenderWidget::OnHandleInputEvent ack throttled&quot;;
+      if (pending_input_event_ack_) {
+        // As two different kinds of events could cause us to postpone an ack
+        // we send it now, if we have one pending. The Browser should never
+        // send us the same kind of event we are delaying the ack for.
+        Send(pending_input_event_ack_.release());
+      }
+      pending_input_event_ack_ = response.Pass();
+      if (compositor_)
+        compositor_-&gt;NotifyInputThrottledUntilCommit();
+    } else {
+      Send(response.release());
+    }
+  }</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Chromium/">Chromium</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-flash-calibration" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

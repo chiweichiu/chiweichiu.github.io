@@ -3,17 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Wade Work Web</title>
+  <title>C++ week 3 / operator overloading | Wade Work Web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Wade Work Web">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="reference link
+
+Q1 :
+12345678910111213141516171819202122232425262728293031323334353637383940#include &amp;lt;iostream&amp;gt;#include &amp;lt;cstring&amp;gt;#include &amp;lt;cstdlib&amp;gt;#include &amp;lt;cstdio&amp;gt;#include &amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ week 3 / operator overloading">
+<meta property="og:url" content="http://yoursite.com/2015/11/10/operator-overloading/index.html">
 <meta property="og:site_name" content="Wade Work Web">
-<meta property="og:description">
+<meta property="og:description" content="reference link
+
+Q1 :
+12345678910111213141516171819202122232425262728293031323334353637383940#include &amp;lt;iostream&amp;gt;#include &amp;lt;cstring&amp;gt;#include &amp;lt;cstdlib&amp;gt;#include &amp;lt;cstdio&amp;gt;#include &amp;lt">
+<meta property="og:updated_time" content="2015-11-10T13:20:30.410Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Wade Work Web">
-<meta name="twitter:description">
+<meta name="twitter:title" content="C++ week 3 / operator overloading">
+<meta name="twitter:description" content="reference link
+
+Q1 :
+12345678910111213141516171819202122232425262728293031323334353637383940#include &amp;lt;iostream&amp;gt;#include &amp;lt;cstring&amp;gt;#include &amp;lt;cstdlib&amp;gt;#include &amp;lt;cstdio&amp;gt;#include &amp;lt">
   
     <link rel="alternative" href="/atom.xml" title="Wade Work Web" type="application/atom+xml">
   
@@ -120,135 +130,7 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-wifi-car-0" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/12/wifi-car-0/" class="article-date">
-  	<time datetime="2015-11-12T10:19:18.000Z" itemprop="datePublished">2015-11-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/12/wifi-car-0/">Wifi car 0</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Communate with ESP8266 via PL2303HXD</p>
-<p>Use arduino as power supply to give enough energy to ESP8266</p>
-<pre><code>&#x3010;Arduino&#x3011;<span class="number">3.3</span>V &#x2192;&#x3010;ESP8266&#x3011;VCC
-&#x3010;Arduino&#x3011;<span class="number">3.3</span>V &#x2192;&#x3010;ESP8266&#x3011;CH_PD
-&#x3010;Arduino&#x3011;GND  &#x2192;&#x3010;ESP8266&#x3011;GND
-&#x3010;Arduino&#x3011;GND  &#x2192;&#x3010;PL2303HXD&#x3011;GND   
-&#x3010;PL2303HXD&#x3011;TXD&#x2192;&#x3010;ESP8266&#x3011;URXD
-&#x3010;PL2303HXD&#x3011;RXD&#x2192;&#x3010;ESP8266&#x3011;UTXD
-</code></pre><p>then you can talk to esp8266 by AT command.    </p>
-<p>Reference :</p>
-<p><a href="http://lets-make-games.blogspot.tw/2015/04/wifi-esp8266-wifi.html" target="_blank" rel="external">wifi car</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/arduino/">arduino</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-arduino-digitalWrite-function" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/11/arduino-digitalWrite-function/" class="article-date">
-  	<time datetime="2015-11-11T12:14:22.000Z" itemprop="datePublished">2015-11-11</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/11/arduino-digitalWrite-function/">arduino digitalWrite function</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Read digitWrite function.</p>
-<p>DDRx for input,output / PORTx for high,low / PINx for read signal
-and it define at your local drive/hardware/tools/avr/avr/include/avr/iom328p.h</p>
-<p>Reference:</p>
-<p><a href="http://programmermagazine.github.io/201406/htm/article1.html#&#x5F9E;-arduino-&#x5230;-avr-&#x6676;&#x7247;1----avr-&#x6676;&#x7247;&#x8207;-io-ports-&#x7BC4;&#x4F8B;-&#x4F5C;&#x8005;cooper-maa" target="_blank" rel="external">AVR and IO port</a></p>
-<p><a href="http://garretlab.web.fc2.com/en/arduino/inside/arduino/wiring_digital.c/digitalWrite.html" target="_blank" rel="external">digitalWrite()</a></p>
-<p><a href="http://atmega32-avr.com/Download/atmega328_datasheet.pdf?b2b513" target="_blank" rel="external">avr mega 328 datasheet</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/arduino/">arduino</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-operator-overloading" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-operator-overloading" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2015/11/10/operator-overloading/" class="article-date">
@@ -264,12 +146,23 @@ and it define at your local drive/hardware/tools/avr/avr/include/avr/iom328p.h</
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/10/operator-overloading/">C++ week 3 / operator overloading</a>
+    <h1 class="article-title" itemprop="name">
+      C++ week 3 / operator overloading
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/C/">C++</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -284,209 +177,51 @@ and it define at your local drive/hardware/tools/avr/avr/include/avr/iom328p.h</
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/C/">C++</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
   
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-good-link" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/04/good-link/" class="article-date">
-  	<time datetime="2015-11-04T08:43:03.000Z" itemprop="datePublished">2015-11-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+<nav id="article-nav">
+  
+    <a href="/2015/11/11/arduino-digitalWrite-function/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/04/good-link/">good link</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Arduino&#x5E95;&#x5C64;&#x539F;&#x59CB;&#x78BC;&#x89E3;&#x6790;</p>
-<ul>
-<li><a href="http://www.slideshare.net/roboard/arduino-38558018" target="_blank" rel="external">Arduino source code</a> </li>
-</ul>
-<p>&#x4F60;&#x6240;&#x4E0D;&#x77E5;&#x9053;&#x7684;C&#x8A9E;&#x8A00;&#xFF1A;&#x6307;&#x6A19;&#x7BC7;</p>
-<ul>
-<li><a href="https://embedded2015.hackpad.com/C-s0rlzR8wVtm" target="_blank" rel="external">C99 pointer</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/data/">data</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-actuator-sub-module" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/04/actuator-sub-module/" class="article-date">
-  	<time datetime="2015-11-04T03:44:31.000Z" itemprop="datePublished">2015-11-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+          arduino digitalWrite function
         
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/04/actuator-sub-module/">actuator sub module</a>
-    </h1>
   
+    <a href="/2015/11/04/good-link/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">good link</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
 
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>module sensor contains many submodules such as sensor,</p>
-<p>chromatix,actuator,eeprom,led flash,strobe flash,cisphy,csid</p>
-<blockquote>
-<p>module_sensor.c</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">module_sensor_init_session
-{
-module_sensor_actuator_init_calibrate
-
-static boolean module_sensor_actuator_init_calibrate(
-    module_sensor_bundle_info_t *s_bundle)
-{
-    /* Get actuator name from sensor */
-    SENSOR_SUB_MODULE_PROCESS_EVENT(s_bundle, SUB_MODULE_SENSOR,
-        SENSOR_GET_ACTUATOR_NAME, &amp;a_name, rc);
-
-    /* Initialize the actuator */
-    SENSOR_SUB_MODULE_PROCESS_EVENT(s_bundle, SUB_MODULE_ACTUATOR,
-        ACTUATOR_INIT, a_name, rc);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>actuator.c</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t actuator_sub_module_init(sensor_func_tbl_t *func_tbl)
-{
-  func_tbl-&gt;open = actuator_open;
-  func_tbl-&gt;process = actuator_process;
-  func_tbl-&gt;close = actuator_close;
-
-static int32_t actuator_process(void *actuator_ctrl,
-  sensor_submodule_event_type_t event, void *data)
-{
-  case ACTUATOR_INIT:
-    rc = af_actuator_init(actuator_ctrl, data);
-
-static int32_t af_actuator_init(void *ptr, void* data)
-{
-  rc = af_actuator_power_up(af_actuator_ptr);
-  cfg.cfgtype = CFG_ACTUATOR_INIT;
-
-  /* Invoke the IOCTL to initialize the actuator */
-  rc = ioctl(af_actuator_ptr-&gt;fd, VIDIOC_MSM_ACTUATOR_CFG, &amp;cfg);
-  rc = actuator_load_lib(ptr, ACTUATOR_CAM_MODE_CAMERA);
-  rc = actuator_load_lib(ptr, ACTUATOR_CAM_MODE_CAMCORDER);    
-```    
-    
-&gt; msm_actuator.c (kernel space)
-   
-```code
-static long msm_actuator_subdev_ioctl(struct v4l2_subdev *sd,
-			unsigned int cmd, void *arg)
-{
-	case VIDIOC_MSM_ACTUATOR_CFG:
-		return msm_actuator_config(a_ctrl, argp);
-
-static int32_t msm_actuator_config(struct msm_actuator_ctrl_t *a_ctrl,
-	void __user *argp)
-{
-	case CFG_ACTUATOR_INIT:
-		rc = msm_actuator_init(a_ctrl);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Camera/">Camera</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
   
 </article>
 
 
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
 
 
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
-  
 </div>
       <footer id="footer">
   <div class="outer">
@@ -510,8 +245,8 @@ static int32_t msm_actuator_config(struct msm_actuator_ctrl_t *a_ctrl,
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

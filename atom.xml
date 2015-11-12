@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-11-04T08:47:17.545Z</updated>
+  <updated>2015-11-12T10:24:16.561Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,14 +15,95 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Wifi car 0]]></title>
+    <link href="http://yoursite.com/2015/11/12/wifi-car-0/"/>
+    <id>http://yoursite.com/2015/11/12/wifi-car-0/</id>
+    <published>2015-11-12T10:19:18.000Z</published>
+    <updated>2015-11-12T10:24:16.561Z</updated>
+    <content type="html"><![CDATA[<p>Communate with ESP8266 via PL2303HXD</p>
+<p>Use arduino as power supply to give enough energy to ESP8266</p>
+<pre><code>&#x3010;Arduino&#x3011;<span class="number">3.3</span>V &#x2192;&#x3010;ESP8266&#x3011;VCC
+&#x3010;Arduino&#x3011;<span class="number">3.3</span>V &#x2192;&#x3010;ESP8266&#x3011;CH_PD
+&#x3010;Arduino&#x3011;GND  &#x2192;&#x3010;ESP8266&#x3011;GND
+&#x3010;Arduino&#x3011;GND  &#x2192;&#x3010;PL2303HXD&#x3011;GND   
+&#x3010;PL2303HXD&#x3011;TXD&#x2192;&#x3010;ESP8266&#x3011;URXD
+&#x3010;PL2303HXD&#x3011;RXD&#x2192;&#x3010;ESP8266&#x3011;UTXD
+</code></pre><p>then you can talk to esp8266 by AT command.    </p>
+<p>Reference :</p>
+<p><a href="http://lets-make-games.blogspot.tw/2015/04/wifi-esp8266-wifi.html" target="_blank" rel="external">wifi car</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Communate with ESP8266 via PL2303HXD</p>
+<p>Use arduino as power supply to give enough energy to ESP8266</p>
+<pre><code>&#x3010;Arduino&#]]>
+    </summary>
+    
+      <category term="arduino" scheme="http://yoursite.com/categories/arduino/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[arduino digitalWrite function]]></title>
+    <link href="http://yoursite.com/2015/11/11/arduino-digitalWrite-function/"/>
+    <id>http://yoursite.com/2015/11/11/arduino-digitalWrite-function/</id>
+    <published>2015-11-11T12:14:22.000Z</published>
+    <updated>2015-11-12T10:17:39.009Z</updated>
+    <content type="html"><![CDATA[<p>Read digitWrite function.</p>
+<p>DDRx for input,output / PORTx for high,low / PINx for read signal
+and it define at your local drive/hardware/tools/avr/avr/include/avr/iom328p.h</p>
+<p>Reference:</p>
+<p><a href="http://programmermagazine.github.io/201406/htm/article1.html#&#x5F9E;-arduino-&#x5230;-avr-&#x6676;&#x7247;1----avr-&#x6676;&#x7247;&#x8207;-io-ports-&#x7BC4;&#x4F8B;-&#x4F5C;&#x8005;cooper-maa" target="_blank" rel="external">AVR and IO port</a></p>
+<p><a href="http://garretlab.web.fc2.com/en/arduino/inside/arduino/wiring_digital.c/digitalWrite.html" target="_blank" rel="external">digitalWrite()</a></p>
+<p><a href="http://atmega32-avr.com/Download/atmega328_datasheet.pdf?b2b513" target="_blank" rel="external">avr mega 328 datasheet</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Read digitWrite function.</p>
+<p>DDRx for input,output / PORTx for high,low / PINx for read signal
+and it define at your local drive/hard]]>
+    </summary>
+    
+      <category term="arduino" scheme="http://yoursite.com/categories/arduino/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[C++ week 3 / operator overloading]]></title>
+    <link href="http://yoursite.com/2015/11/10/operator-overloading/"/>
+    <id>http://yoursite.com/2015/11/10/operator-overloading/</id>
+    <published>2015-11-10T12:54:07.000Z</published>
+    <updated>2015-11-10T13:20:30.410Z</updated>
+    <content type="html"><![CDATA[<ul>
+<li><a href="https://zmy.im/archives/2015/08/76.html" target="_blank" rel="external">reference link</a></li>
+</ul>
+<p>Q1 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Complex {</span><br><span class="line"><span class="keyword">private</span>:    </span><br><span class="line">    <span class="keyword">double</span> r,i;</span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; r &lt;&lt; <span class="string">&quot;+&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;i&quot;</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    Complex():r(<span class="number">0.0</span>),i(<span class="number">0.0</span>) {}</span><br><span class="line">    Complex &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> <span class="keyword">char</span> *rhs)</span><br><span class="line">    { </span><br><span class="line">        <span class="built_in">shared_ptr</span>&lt;<span class="keyword">char</span>&gt; str(<span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(rhs)+<span class="number">1</span>]);</span><br><span class="line">        <span class="built_in">strcpy</span>(str.get(),rhs); </span><br><span class="line">        r=<span class="number">0.0</span>; i=<span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">char</span> *pstr = strtok(str.get(),<span class="string">&quot;+i&quot;</span>);</span><br><span class="line">        <span class="keyword">while</span>(pstr != <span class="literal">NULL</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(r == <span class="number">0.0</span>)</span><br><span class="line">                r = atof(pstr);</span><br><span class="line">            pstr = strtok(<span class="literal">NULL</span>,<span class="string">&quot;+i&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0.0</span>)</span><br><span class="line">                i = atof(pstr);    </span><br><span class="line">        }        </span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    Complex a;</span><br><span class="line">    a = <span class="string">&quot;3+4i&quot;</span>; a.Print();</span><br><span class="line">    a = <span class="string">&quot;5+6i&quot;</span>; a.Print();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Q2 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">class</span> MyInt {</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> nVal;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    MyInt(<span class="keyword">int</span> n) { nVal = n; }</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ReturnVal</span><span class="params">()</span> </span>{ <span class="keyword">return</span> nVal; }</span><br><span class="line">    MyInt &amp; <span class="keyword">operator</span>-(<span class="keyword">int</span> i)</span><br><span class="line">    {</span><br><span class="line">        nVal -= i;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>{</span><br><span class="line">    <span class="function">MyInt <span class="title">objInt</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    objInt-<span class="number">2</span>-<span class="number">1</span>-<span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; objInt.ReturnVal();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt;<span class="string">&quot;,&quot;</span>;</span><br><span class="line">    objInt-<span class="number">2</span>-<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; objInt.ReturnVal();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<ul>
+<li><a href="https://zmy.im/archives/2015/08/76.html" target="_blank" rel="external">reference link</a></li>
+</ul>
+<p>Q1 :</p>
+<figure ]]>
+    </summary>
+    
+      <category term="C++" scheme="http://yoursite.com/categories/C/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[good link]]></title>
     <link href="http://yoursite.com/2015/11/04/good-link/"/>
     <id>http://yoursite.com/2015/11/04/good-link/</id>
     <published>2015-11-04T08:43:03.000Z</published>
-    <updated>2015-11-04T08:47:17.545Z</updated>
+    <updated>2015-11-04T11:32:37.970Z</updated>
     <content type="html"><![CDATA[<p>Arduino&#x5E95;&#x5C64;&#x539F;&#x59CB;&#x78BC;&#x89E3;&#x6790;</p>
 <ul>
-<li><a href="http://www.slideshare.net/roboard/arduino-38558018" target="_blank" rel="external">Arduino source code</a></li>
+<li><a href="http://www.slideshare.net/roboard/arduino-38558018" target="_blank" rel="external">Arduino source code</a> </li>
+</ul>
+<p>&#x4F60;&#x6240;&#x4E0D;&#x77E5;&#x9053;&#x7684;C&#x8A9E;&#x8A00;&#xFF1A;&#x6307;&#x6A19;&#x7BC7;</p>
+<ul>
+<li><a href="https://embedded2015.hackpad.com/C-s0rlzR8wVtm" target="_blank" rel="external">C99 pointer</a></li>
 </ul>
 ]]></content>
     <summary type="html">
