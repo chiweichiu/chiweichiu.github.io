@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Wade Work Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wade Work Web">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:site_name" content="Wade Work Web">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wade Work Web">
+<meta name="twitter:description">
+  
+    <link rel="alternative" href="/atom.xml" title="Wade Work Web" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Wade Chiu</a></h1>
+		</hgroup>
+
+		
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="/#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Wade Chiu</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="null" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Wade Chiu</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="/#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap">
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/27/hello-world/" class="article-date">
+  	<time datetime="2015-10-27T05:47:12.042Z" itemprop="datePublished">2015-10-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/27/hello-world/">Camera Sensor porting on Qualcomm</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Sensor architecture<ul>
+<li>Porting sensor</li>
+<li>Trouble shooting</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sensor architecture"><strong>Sensor architecture</strong></h2><ul>
+<li><strong>kernel sapce</strong></li>
+</ul>
+<blockquote>
+<p>v4l2 framework</p>
+<p>msm.c </p>
+</blockquote>
+<p>Register video-device / v4l2 device</p>
+<blockquote>
+<p>msm_sensor.c</p>
+</blockquote>
+<p>read dtsi config</p>
+<p>struct msm_sensor_ctrl_t</p>
+<p>regiser v4l2 subdev</p>
+<blockquote>
+<p>xxx_sensor.c (power sequence)</p>
+</blockquote>
+<p>static struct i2c_driver xxx_sensor_i2c_driver</p>
+<p>static struct platform_driver xxx_sensor_platform_driver
+(one parameter is <em>msm_sensor_ctrl_t</em>)</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static struct msm_sensor_ctrl_t xxx_sensor_ctrl = {
+	.sensor_i2c_client = &amp;xxx_sensor_i2c_client,
+	.power_setting_array.power_setting = xxx_sensor_power_setting,
+	.power_setting_array.size = ARRAY_SIZE(xxx_sensor_power_setting),
+	.msm_sensor_mutex = &amp;xxx_sensor_mut,
+	.sensor_v4l2_subdev_info = xxx_sensor_subdev_info,
+	.sensor_v4l2_subdev_info_size = ARRAY_SIZE(xxx_sensor_subdev_info),
+	.func_tbl = &amp;xxx_sensor_sensor_func_tbl,
+};</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>user space</strong></li>
+</ul>
+<p>When create mm-camera-deamon process, it will init some modules.
+and camera module is one of them.
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mm-camera/mm-camera2/media-controller/modules<span class="comment"># ls</span></span><br><span class="line">iface  imglib  includes  isp  pproc  pproc-new  sensors  stats</span><br><span class="line"></span><br><span class="line">mm-camera/mm-camera2/media-controller/modules/sensors<span class="comment"># ls</span></span><br><span class="line">actuator_libs  actuators  Android.mk  chromatix  csid  csiphy  eeprom  eeprom_libs  includes  led_flash  module  sensor_libs  sensors  strobe_flash</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>moduel_sensor.c</p>
+</blockquote>
+<p>it will call function  <em>module_sensor_init</em>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static int32_t (*sub_module_init[])(sensor_func_tbl_t *) = {
+  [SUB_MODULE_SENSOR]       = sensor_sub_module_init,
+  [SUB_MODULE_CHROMATIX]    = chromatix_sub_module_init,
+  [SUB_MODULE_ACTUATOR]     = actuator_sub_module_init,
+  [SUB_MODULE_EEPROM]       = eeprom_sub_module_init,
+  [SUB_MODULE_LED_FLASH]    = led_flash_sub_module_init,
+  [SUB_MODULE_STROBE_FLASH] = strobe_flash_sub_module_init,
+  [SUB_MODULE_CSIPHY]       = csiphy_sub_module_init,
+  [SUB_MODULE_CSIPHY_3D]    = csiphy_sub_module_init,
+  [SUB_MODULE_CSID]         = csid_sub_module_init,
+  [SUB_MODULE_CSID_3D]      = csid_sub_module_init,
+  [SUB_MODULE_OIS]          = NULL,
+};
+
+int32_t sensor_sub_module_init(sensor_func_tbl_t *func_tbl)
+{
+  if (!func_tbl) {
+    SERR(&quot;failed&quot;);
+    return SENSOR_FAILURE;
+  }
+  func_tbl-&gt;open = sensor_open;
+  func_tbl-&gt;process = sensor_process;
+  func_tbl-&gt;close = sensor_close;
+  return SENSOR_SUCCESS;
+}
+
+static int32_t sensor_process(void *sctrl,
+  sensor_submodule_event_type_t event, void *data)
+{
+....
+  case SENSOR_SET_RESOLUTION:
+    rc = sensor_set_resolution(sctrl, data);
+    break;
+....</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>sensor.c</p>
+</blockquote>
+<p>To load spectific user sapce driver : sensor_load_library(const char <em>name, void </em>data)</p>
+<h2 id="Porting sensor"><strong>Porting sensor</strong></h2><blockquote>
+<p>dtsi
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">qcom,camera@<span class="number">1</span> {</span><br><span class="line">        cell-index = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        compatible = <span class="string">&quot;xxx,s5k5e_xxx&quot;</span>;</span><br><span class="line">        reg = &lt;<span class="number">0x20</span>&gt;;</span><br><span class="line">        qcom,slave-id = &lt;<span class="number">0x20</span> <span class="number">0x0000</span> <span class="number">0x5E20</span>&gt;;</span><br><span class="line">        qcom,csiphy-sd-index = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        qcom,csid-sd-index = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        qcom,mount-angle = &lt;<span class="number">270</span>&gt;;</span><br><span class="line">        qcom,sensor-name = <span class="string">&quot;s5k5e_xxx&quot;</span>;</span><br><span class="line">        cam_vdig-supply = &lt;&amp;ncp6924_ldo3&gt;;</span><br><span class="line">        cam_vio-supply = &lt;&amp;ncp6924_ldo4&gt;;</span><br><span class="line">        cam_vana-supply = &lt;&amp;msm_gpio <span class="number">8</span> <span class="number">0</span>&gt;;</span><br><span class="line">        cam_vaf-supply = &lt;&amp;ncp6924_ldo1&gt;;</span><br><span class="line">        qcom,cam-vreg-name = <span class="string">&quot;cam_vdig&quot;</span>, <span class="string">&quot;cam_vio&quot;</span>, <span class="string">&quot;cam_vana&quot;</span>,<span class="string">&quot;cam_vaf&quot;</span>;</span><br><span class="line">        qcom,cam-vreg-type = &lt;<span class="number">0</span> <span class="number">0</span> <span class="number">2</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-min-voltage = &lt;<span class="number">1200000</span> <span class="number">1800000</span> <span class="number">2800000</span> <span class="number">2800000</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-max-voltage = &lt;<span class="number">1200000</span> <span class="number">1800000</span> <span class="number">2800000</span> <span class="number">2800000</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-op-mode = &lt;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,cam-vreg-gpios-index = &lt;<span class="number">99</span> <span class="number">99</span> <span class="number">2</span> <span class="number">99</span>&gt;;</span><br><span class="line">        </span><br><span class="line">        pinctrl-names = <span class="string">&quot;cam_default&quot;</span>, <span class="string">&quot;cam_suspend&quot;</span>;</span><br><span class="line">        pinctrl-<span class="number">0</span> = &lt;&amp;cam_sensor_mclk1_default &amp;cam_sensor_front_default&gt;;</span><br><span class="line">        pinctrl-<span class="number">1</span> = &lt;&amp;cam_sensor_mclk1_sleep &amp;cam_sensor_front_sleep&gt;;</span><br><span class="line"></span><br><span class="line">        gpios = &lt;&amp;msm_gpio <span class="number">27</span> <span class="number">0</span>&gt;,</span><br><span class="line">            &lt;&amp;msm_gpio <span class="number">28</span> <span class="number">0</span>&gt;,</span><br><span class="line">            &lt;&amp;msm_gpio <span class="number">8</span> <span class="number">0</span>&gt;; </span><br><span class="line">        qcom,gpio-reset = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        qcom,gpio-custom1 = &lt;<span class="number">2</span>&gt;; </span><br><span class="line">        qcom,gpio-req-tbl-num = &lt;<span class="number">0</span> <span class="number">1</span> <span class="number">2</span>&gt;;</span><br><span class="line">        qcom,gpio-req-tbl-flags = &lt;<span class="number">1</span> <span class="number">0</span> <span class="number">0</span>&gt;;</span><br><span class="line">        qcom,gpio-req-tbl-label = <span class="string">&quot;CAMIF_MCLK&quot;</span>,</span><br><span class="line">        <span class="string">&quot;CAM_RST&quot;</span>,</span><br><span class="line">        <span class="string">&quot;CAM_SEL&quot;</span>; </span><br><span class="line"></span><br><span class="line">        qcom,csi-lane-assign = &lt;<span class="number">0x0004</span>&gt;;</span><br><span class="line">        qcom,csi-lane-mask = &lt;<span class="number">0x18</span>&gt;;</span><br><span class="line">        qcom,sensor-position = &lt;<span class="number">1</span>&gt;;</span><br><span class="line">        qcom,cci-master = &lt;<span class="number">0</span>&gt;;</span><br><span class="line">        status = <span class="string">&quot;ok&quot;</span>;</span><br><span class="line">        clocks = &lt;&amp;clock_gcc clk_mclk1_clk_src&gt;,</span><br><span class="line">                 &lt;&amp;clock_gcc clk_gcc_camss_mclk1_clk&gt;;</span><br><span class="line">        clock-names = <span class="string">&quot;cam_src_clk&quot;</span>, <span class="string">&quot;cam_clk&quot;</span>;</span><br><span class="line">    };</span><br></pre></td></tr></table></figure></p>
+<p>sensor driver
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> msm_sensor_power_setting s5k5e_htc_power_setting[] = {</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VAF,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VIO,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_GPIO,</span><br><span class="line">        .seq_val = SENSOR_GPIO_CUSTOM1,<span class="comment">//GPIO 8 , cam analog</span></span><br><span class="line">        .config_val = GPIO_OUT_HIGH,</span><br><span class="line">        .delay = <span class="number">1</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_VREG,</span><br><span class="line">        .seq_val = CAM_VDIG,</span><br><span class="line">        .config_val = <span class="number">1</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_GPIO,</span><br><span class="line">        .seq_val = SENSOR_GPIO_RESET,<span class="comment">//GPIO 28</span></span><br><span class="line">        .config_val = GPIO_OUT_HIGH,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_CLK,</span><br><span class="line">        .seq_val = SENSOR_CAM_MCLK, <span class="comment">//gpio 27</span></span><br><span class="line">        .config_val = <span class="number">0</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        .seq_type = SENSOR_I2C_MUX,</span><br><span class="line">        .seq_val = <span class="number">0</span>,</span><br><span class="line">        .config_val = <span class="number">0</span>,</span><br><span class="line">        .delay = <span class="number">5</span>,</span><br><span class="line">    },</span><br><span class="line">};</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="Trouble shooting"><strong>Trouble shooting</strong></h2><ul>
+<li>flash image into semi device first time.</li>
+<li>enable uart log</li>
+<li>check if sensor config which have same name that you are porting now include in dtsi. it will cause to read wrong config file.  </li>
+<li>csiphy1 open fail (only cisphy 0)</li>
+<li>if you port front cam first, you have to give it main cam id which is 0</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Camera/">Camera</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
+  
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 Wade Chiu
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: true,
+		isPost: false,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

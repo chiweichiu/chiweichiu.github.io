@@ -3,27 +3,33 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Wifi car 0 | Wade Work Web</title>
+  <title>docker basic | Wade Work Web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Communate with ESP8266 via PL2303HXD
-Use arduino as power supply to give enough energy to ESP8266
-&amp;#x3010;Arduino&amp;#x3011;3.3V &amp;#x2192;&amp;#x3010;ESP8266&amp;#x3011;VCC
-&amp;#x3010;Arduino&amp;#x3011;3.3V &amp;#x2192;&amp;#x">
+  <meta name="description" content="Install docker on windows
+You will have a docker quict start terminal and a docker server install in virtualbox.
+Launch docker
+install and run bash
+#&amp;gt; winpty docker run -it ubuntu bash
+#&amp;gt; sudo a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Wifi car 0">
-<meta property="og:url" content="http://yoursite.com/2015/11/12/wifi-car-0/index.html">
+<meta property="og:title" content="docker basic">
+<meta property="og:url" content="http://yoursite.com/2015/11/16/docker-basic/index.html">
 <meta property="og:site_name" content="Wade Work Web">
-<meta property="og:description" content="Communate with ESP8266 via PL2303HXD
-Use arduino as power supply to give enough energy to ESP8266
-&amp;#x3010;Arduino&amp;#x3011;3.3V &amp;#x2192;&amp;#x3010;ESP8266&amp;#x3011;VCC
-&amp;#x3010;Arduino&amp;#x3011;3.3V &amp;#x2192;&amp;#x">
-<meta property="og:updated_time" content="2015-11-12T10:24:16.561Z">
+<meta property="og:description" content="Install docker on windows
+You will have a docker quict start terminal and a docker server install in virtualbox.
+Launch docker
+install and run bash
+#&amp;gt; winpty docker run -it ubuntu bash
+#&amp;gt; sudo a">
+<meta property="og:updated_time" content="2015-11-16T02:28:19.439Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Wifi car 0">
-<meta name="twitter:description" content="Communate with ESP8266 via PL2303HXD
-Use arduino as power supply to give enough energy to ESP8266
-&amp;#x3010;Arduino&amp;#x3011;3.3V &amp;#x2192;&amp;#x3010;ESP8266&amp;#x3011;VCC
-&amp;#x3010;Arduino&amp;#x3011;3.3V &amp;#x2192;&amp;#x">
+<meta name="twitter:title" content="docker basic">
+<meta name="twitter:description" content="Install docker on windows
+You will have a docker quict start terminal and a docker server install in virtualbox.
+Launch docker
+install and run bash
+#&amp;gt; winpty docker run -it ubuntu bash
+#&amp;gt; sudo a">
   
     <link rel="alternative" href="/atom.xml" title="Wade Work Web" type="application/atom+xml">
   
@@ -130,11 +136,11 @@ Use arduino as power supply to give enough energy to ESP8266
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-wifi-car-0" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-docker-basic" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/11/12/wifi-car-0/" class="article-date">
-  	<time datetime="2015-11-12T10:19:18.000Z" itemprop="datePublished">2015-11-12</time>
+      <a href="/2015/11/16/docker-basic/" class="article-date">
+  	<time datetime="2015-11-16T02:03:40.000Z" itemprop="datePublished">2015-11-16</time>
 </a>
     </div>
   
@@ -147,7 +153,7 @@ Use arduino as power supply to give enough energy to ESP8266
         
   
     <h1 class="article-title" itemprop="name">
-      Wifi car 0
+      docker basic
     </h1>
   
 
@@ -157,7 +163,7 @@ Use arduino as power supply to give enough energy to ESP8266
         
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/arduino/">arduino</a>
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
 	</div>
 
 
@@ -167,17 +173,18 @@ Use arduino as power supply to give enough energy to ESP8266
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Communate with ESP8266 via PL2303HXD</p>
-<p>Use arduino as power supply to give enough energy to ESP8266</p>
-<pre><code>&#x3010;Arduino&#x3011;<span class="number">3.3</span>V &#x2192;&#x3010;ESP8266&#x3011;VCC
-&#x3010;Arduino&#x3011;<span class="number">3.3</span>V &#x2192;&#x3010;ESP8266&#x3011;CH_PD
-&#x3010;Arduino&#x3011;GND  &#x2192;&#x3010;ESP8266&#x3011;GND
-&#x3010;Arduino&#x3011;GND  &#x2192;&#x3010;PL2303HXD&#x3011;GND   
-&#x3010;PL2303HXD&#x3011;TXD&#x2192;&#x3010;ESP8266&#x3011;URXD
-&#x3010;PL2303HXD&#x3011;RXD&#x2192;&#x3010;ESP8266&#x3011;UTXD
-</code></pre><p>then you can talk to esp8266 by AT command.    </p>
-<p>Reference :</p>
-<p><a href="http://lets-make-games.blogspot.tw/2015/04/wifi-esp8266-wifi.html" target="_blank" rel="external">wifi car</a></p>
+        <p><a href="https://docs.docker.com/engine/installation/windows/" target="_blank" rel="external">Install docker on windows</a></p>
+<p>You will have a docker quict start terminal and a docker server install in virtualbox.</p>
+<p>Launch docker</p>
+<p>install and run bash</p>
+<p>#&gt; winpty docker run -it ubuntu bash</p>
+<p>#&gt; sudo apt-get update</p>
+<p>#&gt; sudo apt-get install gcc</p>
+<p>#&gt; exit</p>
+<p>#&gt; winpty docker ps -a (find container id)</p>
+<p>#&gt; winpty docker commit <id> gcc:utuntu</id></p>
+<p>#&gt; winpty docker images (show all images)</p>
+<p>#&gt; winpty docker run -it gcc:ubuntu</p>
 
       
     </div>
@@ -187,18 +194,9 @@ Use arduino as power supply to give enough energy to ESP8266
     
 <nav id="article-nav">
   
-    <a href="/2015/11/16/docker-basic/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          docker basic
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/11/11/arduino-digitalWrite-function/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">arduino digitalWrite function</div>
+    <a href="/2015/11/12/wifi-car-0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Wifi car 0</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
