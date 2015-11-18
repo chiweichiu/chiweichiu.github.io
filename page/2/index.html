@@ -122,6 +122,191 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-arduino-digitalWrite-function" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/11/arduino-digitalWrite-function/" class="article-date">
+  	<time datetime="2015-11-11T12:14:22.000Z" itemprop="datePublished">2015-11-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/11/arduino-digitalWrite-function/">arduino digitalWrite function</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Read digitWrite function.</p>
+<p>DDRx for input,output / PORTx for high,low / PINx for read signal
+and it define at your local drive/hardware/tools/avr/avr/include/avr/iom328p.h</p>
+<p>Reference:</p>
+<p><a href="http://programmermagazine.github.io/201406/htm/article1.html#&#x5F9E;-arduino-&#x5230;-avr-&#x6676;&#x7247;1----avr-&#x6676;&#x7247;&#x8207;-io-ports-&#x7BC4;&#x4F8B;-&#x4F5C;&#x8005;cooper-maa" target="_blank" rel="external">AVR and IO port</a></p>
+<p><a href="http://garretlab.web.fc2.com/en/arduino/inside/arduino/wiring_digital.c/digitalWrite.html" target="_blank" rel="external">digitalWrite()</a></p>
+<p><a href="http://atmega32-avr.com/Download/atmega328_datasheet.pdf?b2b513" target="_blank" rel="external">avr mega 328 datasheet</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/arduino/">arduino</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-operator-overloading" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/10/operator-overloading/" class="article-date">
+  	<time datetime="2015-11-10T12:54:07.000Z" itemprop="datePublished">2015-11-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/10/operator-overloading/">C++ week 4 / operator overloading</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><a href="https://zmy.im/archives/2015/08/76.html" target="_blank" rel="external">reference link</a></li>
+</ul>
+<p>Q1 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Complex {</span><br><span class="line"><span class="keyword">private</span>:    </span><br><span class="line">    <span class="keyword">double</span> r,i;</span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; r &lt;&lt; <span class="string">&quot;+&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;i&quot;</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    Complex():r(<span class="number">0.0</span>),i(<span class="number">0.0</span>) {}</span><br><span class="line">    Complex &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> <span class="keyword">char</span> *rhs)</span><br><span class="line">    { </span><br><span class="line">        <span class="built_in">shared_ptr</span>&lt;<span class="keyword">char</span>&gt; str(<span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(rhs)+<span class="number">1</span>]);</span><br><span class="line">        <span class="built_in">strcpy</span>(str.get(),rhs); </span><br><span class="line">        r=<span class="number">0.0</span>; i=<span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">char</span> *pstr = strtok(str.get(),<span class="string">&quot;+i&quot;</span>);</span><br><span class="line">        <span class="keyword">while</span>(pstr != <span class="literal">NULL</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(r == <span class="number">0.0</span>)</span><br><span class="line">                r = atof(pstr);</span><br><span class="line">            pstr = strtok(<span class="literal">NULL</span>,<span class="string">&quot;+i&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0.0</span>)</span><br><span class="line">                i = atof(pstr);    </span><br><span class="line">        }        </span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    Complex a;</span><br><span class="line">    a = <span class="string">&quot;3+4i&quot;</span>; a.Print();</span><br><span class="line">    a = <span class="string">&quot;5+6i&quot;</span>; a.Print();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Q2 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">class</span> MyInt {</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> nVal;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    MyInt(<span class="keyword">int</span> n) { nVal = n; }</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ReturnVal</span><span class="params">()</span> </span>{ <span class="keyword">return</span> nVal; }</span><br><span class="line">    MyInt &amp; <span class="keyword">operator</span>-(<span class="keyword">int</span> i)</span><br><span class="line">    {</span><br><span class="line">        nVal -= i;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>{</span><br><span class="line">    <span class="function">MyInt <span class="title">objInt</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    objInt-<span class="number">2</span>-<span class="number">1</span>-<span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; objInt.ReturnVal();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt;<span class="string">&quot;,&quot;</span>;</span><br><span class="line">    objInt-<span class="number">2</span>-<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; objInt.ReturnVal();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Q3 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Array2 {</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> r;</span><br><span class="line">    <span class="keyword">int</span> c;</span><br><span class="line">    <span class="keyword">int</span> *arr;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Array2() { arr = <span class="literal">NULL</span>; }</span><br><span class="line">    Array2(<span class="keyword">int</span> i,<span class="keyword">int</span> j):r(i),c(j) </span><br><span class="line">    {</span><br><span class="line">        arr = <span class="keyword">new</span> <span class="keyword">int</span>[i*j];    </span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">int</span> * <span class="keyword">operator</span>[](<span class="keyword">int</span> i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">return</span> arr+i*c;</span><br><span class="line">    }</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span><br><span class="line">    </span>{</span><br><span class="line">        <span class="keyword">return</span> arr[i*c+j];</span><br><span class="line">    }</span><br><span class="line">    Array2 &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array2 &amp; rhs)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span>(arr != rhs.arr)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">int</span> *tmp = <span class="keyword">new</span>(nothrow) <span class="keyword">int</span>[rhs.r*rhs.c];</span><br><span class="line">            <span class="keyword">if</span>(tmp != <span class="literal">NULL</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">memcpy</span>(tmp,rhs.arr,<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*rhs.r*rhs.c);</span><br><span class="line">                <span class="keyword">delete</span> [] arr;</span><br><span class="line">                arr = tmp;</span><br><span class="line">                c = rhs.c;</span><br><span class="line">                r = rhs.r;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;     </span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="function">Array2 <span class="title">a</span><span class="params">(<span class="number">3</span>,<span class="number">4</span>)</span></span>;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>( i = <span class="number">0</span>;i &lt; <span class="number">3</span>; ++i )</span><br><span class="line">        <span class="keyword">for</span>( j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j ++ )</span><br><span class="line">            a[i][j] = i * <span class="number">4</span> + j;</span><br><span class="line">    <span class="keyword">for</span>( i = <span class="number">0</span>;i &lt; <span class="number">3</span>; ++i ) {</span><br><span class="line">        <span class="keyword">for</span>( j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j ++ ) {</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; a(i,j) &lt;&lt; <span class="string">&quot;,&quot;</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;next&quot;</span> &lt;&lt; endl;</span><br><span class="line">    Array2 b; b = a;</span><br><span class="line">    <span class="keyword">for</span>( i = <span class="number">0</span>;i &lt; <span class="number">3</span>; ++i ) {</span><br><span class="line">        <span class="keyword">for</span>( j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j ++ ) {</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; b[i][j] &lt;&lt; <span class="string">&quot;,&quot;</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/C/">C++</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-good-link" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/04/good-link/" class="article-date">
+  	<time datetime="2015-11-04T08:43:03.000Z" itemprop="datePublished">2015-11-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/04/good-link/">good link</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Arduino&#x5E95;&#x5C64;&#x539F;&#x59CB;&#x78BC;&#x89E3;&#x6790;</p>
+<ul>
+<li><a href="http://www.slideshare.net/roboard/arduino-38558018" target="_blank" rel="external">Arduino source code</a> </li>
+</ul>
+<p>&#x4F60;&#x6240;&#x4E0D;&#x77E5;&#x9053;&#x7684;C&#x8A9E;&#x8A00;&#xFF1A;&#x6307;&#x6A19;&#x7BC7;</p>
+<ul>
+<li><a href="https://embedded2015.hackpad.com/C-s0rlzR8wVtm" target="_blank" rel="external">C99 pointer</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/data/">data</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-actuator-sub-module" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -378,317 +563,6 @@ mm_camer<span class="built_in">a_poll</span>_thread_launch(&amp;my_obj-&gt;evt_p
 <p>start Preview</p>
 <p>take Picture</p>
 </blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Camera/">Camera</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-note" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/28/note/" class="article-date">
-  	<time datetime="2015-10-28T11:57:04.000Z" itemprop="datePublished">2015-10-28</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/28/note/">note</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>kernel panic</p>
-</blockquote>
-<p>Call trace:</p>
-<p>ffffffc0007aa97c  msm_actuator_move_focus+0x184/0x418</p>
-<p>addr2line -i -f -e vmlinux ffffffc0007aa97c</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Camera/">Camera</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-chromium-input-system" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/27/chromium-input-system/" class="article-date">
-  	<time datetime="2015-10-27T12:16:18.000Z" itemprop="datePublished">2015-10-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/27/chromium-input-system/">chromium input system</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://drive.google.com/uc?id=0B64ey7dy3ylWYVlGTE8zYXlCUlU" alt="chromium input system"></p>
-<blockquote>
-<p><strong>Case 1</strong></p>
-</blockquote>
-<p>&#x5982;&#x679C;&#x6C92;&#x6709; addEventListener&#x53BB;&#x807D;touch event&#x7B49;</p>
-<p>.1 touch event&#x9032;&#x4F86;</p>
-<p>.2 &#x56E0;&#x70BA;&#x6C92;&#x6709;handler&#x6240;&#x4EE5;&#x76F4;&#x63A5;&#x8655;&#x7406;touch event ACK</p>
-<p>.3 ACK&#x88E1;&#x628A;&#x5B58;&#x4E0B;&#x4F86;&#x7684;gesture&#x9001;&#x9032;renderer process&#x7684;compositor thread</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputRouterImpl::OfferToRenderer {
-    Send(new InputMsg_HandleInputEvent
-}
-
-InputHandlerProxy::HandleInputEvent {
-
-}</span><br></pre></td></tr></table></figure>
-<p>.4 &#x5982;&#x679C;compositor thread&#x6C92;&#x8655;&#x7406;&#x9001;&#x9032;renderer process&#x7684;CrRenderMain thread</p>
-<p>.5 &#x8655;&#x7406;gesture ACK</p>
-<blockquote>
-<p><strong>Case 2</strong></p>
-</blockquote>
-<p>&#x6709;&#x807D;touchevent&#x7684;&#x8A71;</p>
-<p>.1 parse &#x7DB2;&#x9801;&#x6642;has handler&#x88AB;&#x8A2D;&#x8D77;&#x4F86;</p>
-<p>.2 touch event&#x9032;&#x4F86;</p>
-<p>.3 trigger timer</p>
-<p>.4 touch event&#x9001;&#x5230;renderer process&#x7684;compositor thread</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputHandlerProxy::EventDisposition InputHandlerProxy::HandleInputEvent(
-    const WebInputEvent&amp; event) {
-&#x2026;&#x2026;..
-  if (event.type == WebInputEvent::MouseWheel) {
-  } else if (event.type == WebInputEvent::GestureScrollBegin) {
-  } else if (event.type == WebInputEvent::GestureScrollUpdate) {
-  } else if (event.type == WebInputEvent::GestureScrollEnd) {
-  } else if (event.type == WebInputEvent::GesturePinchBegin) {
-  } else if (event.type == WebInputEvent::GesturePinchEnd) {
-  } else if (event.type == WebInputEvent::GesturePinchUpdate) {
-  } else if (event.type == WebInputEvent::GestureFlingStart) {
-  } else if (event.type == WebInputEvent::GestureFlingCancel) {
-  } else if (event.type == WebInputEvent::TouchStart) {
-  } else if (WebInputEvent::isKeyboardEventType(event.type)) {
-  } else if (event.type == WebInputEvent::MouseMove) {
-  } else if (event.type == WebInputEvent::GestureDoubleTap) { // handle double tap on our own for responsiveness
-}</span><br></pre></td></tr></table></figure>
-<p>.5 &#x5982;&#x679C;&#x6C92;&#x6709;&#x8655;&#x7406;&#x5C31;&#x9001;&#x5230; CrRenderMain thread&#x4E1F;&#x7D66;V8&#x8655;&#x7406;</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
-                                      ui::LatencyInfo latency_info,
-                                      bool is_keyboard_shortcut) {
-
-bool EventHandler::handleTouchEvent(const PlatformTouchEvent&amp; event)
-{
-&#x2026;..
-            touchEventTarget-&gt;toNode()-&gt;dispatchTouchEvent(touchEvent.get());
-            swallowedEvent = swallowedEvent || touchEvent-&gt;defaultPrevented() || touchEvent-&gt;defaultHandled();
-
-void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
-                                      ui::LatencyInfo latency_info,
-                                      bool is_keyboard_shortcut) {
-
-    scoped_ptr&lt;IPC::Message&gt; response(
-        new InputHostMsg_HandleInputEvent_ACK(routing_id_,
-                                              input_event-&gt;type,
-                                              ack_result,
-                                              latency_info));
-      Send(response.release());</span><br></pre></td></tr></table></figure>
-<p>.6 touch event ACK</p>
-<p>.7 &#x53D6;gesture </p>
-<p><em>&#x5982;&#x679C;&#x6C92;&#x6709;preventDefault</em></p>
-<p>.8 gesture&#x9001;&#x9032; renderer process&#x7684;compositor thread</p>
-<p>.9 &#x5982;&#x679C;&#x6C92;&#x6709;&#x8655;&#x7406;&#x518D;&#x9001;&#x9032;CrRenderMain thread</p>
-<p>.10 gesture ACK</p>
-<p><em>&#x5982;&#x679C;&#x6709;preventDefault</em></p>
-<p>.8 &#x4E0D;send gesture</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void RenderWidget::OnHandleInputEvent(const blink::WebInputEvent* input_event,
-                                      ui::LatencyInfo latency_info,
-                                      bool is_keyboard_shortcut) {
-
-  // Unconsumed touchmove acks should never be throttled as they&apos;re required to
-  // dispatch compositor-handled scroll gestures.
-  bool event_type_can_be_rate_limited =
-      input_event-&gt;type == WebInputEvent::MouseMove ||
-      input_event-&gt;type == WebInputEvent::MouseWheel ||
-      (input_event-&gt;type == WebInputEvent::TouchMove &amp;&amp;
-       ack_result == INPUT_EVENT_ACK_STATE_CONSUMED);
-
-  if (!WebInputEventTraits::IgnoresAckDisposition(input_event-&gt;type)) {
-    scoped_ptr&lt;IPC::Message&gt; response(
-        new InputHostMsg_HandleInputEvent_ACK(routing_id_,
-                                              input_event-&gt;type,
-                                              ack_result,
-                                              latency_info));
-    if (rate_limiting_wanted &amp;&amp; event_type_can_be_rate_limited &amp;&amp;
-        frame_pending &amp;&amp; !is_hidden_) {
-      // We want to rate limit the input events in this case, so we&apos;ll wait for
-      // painting to finish before ACKing this message.
-      TRACE_EVENT_INSTANT0(&quot;renderer&quot;,
-        &quot;RenderWidget::OnHandleInputEvent ack throttled&quot;,
-        TRACE_EVENT_SCOPE_THREAD);
-      LOG(ERROR)&lt;&lt;&quot;[renderer] RenderWidget::OnHandleInputEvent ack throttled&quot;;
-      if (pending_input_event_ack_) {
-        // As two different kinds of events could cause us to postpone an ack
-        // we send it now, if we have one pending. The Browser should never
-        // send us the same kind of event we are delaying the ack for.
-        Send(pending_input_event_ack_.release());
-      }
-      pending_input_event_ack_ = response.Pass();
-      if (compositor_)
-        compositor_-&gt;NotifyInputThrottledUntilCommit();
-    } else {
-      Send(response.release());
-    }
-  }</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Chromium/">Chromium</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-flash-calibration" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/27/flash-calibration/" class="article-date">
-  	<time datetime="2015-10-27T05:50:55.000Z" itemprop="datePublished">2015-10-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/27/flash-calibration/">Camera Calibration</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Calibration architecture"><strong>Calibration architecture</strong></h2><blockquote>
-<p>flash calibration</p>
-</blockquote>
-<p>New a CameraContext which inherit from CameraListener.
-Then call Camera::connect to connect to CameraService.
-You can use full camera function now.</p>
-<p>Put device on top of dark box.
-Run falsh calibration command to get a raw image
-(callback postData and get bayer-qcom-10gbrg buffer) by taking picture.</p>
-<p>Dump 8bit image from 10bit image.
-select 1/6 center area to calculate the r,g,b gain 
-check if the result is correct.</p>
-<p>write to emmc</p>
-<blockquote>
-<p>lsc calibration</p>
-</blockquote>
-<p>open camera -&gt; take picture -&gt; saveRawFile </p>
-<p>-&gt; VFE_LSC_Calibraiton</p>
-<pre><code>-<span class="ruby">&gt; <span class="constant">LensCorrectionLib</span>
-</span>    -<span class="ruby">&gt; extract <span class="constant">R</span>/<span class="constant">Gr</span>/<span class="constant">Gb</span>/<span class="constant">B</span> from raw image (rolloff size <span class="symbol">:</span> <span class="number">13</span>x17)
-</span>    -<span class="ruby">&gt; calibrate_rolloff_mesh_4_channel <span class="symbol">:</span> calculate rolloff table 
-</span>-<span class="ruby">&gt; <span class="constant">LSC_Verification</span>
-</span>    -<span class="ruby">&gt; verify calibration data
-</span>    -<span class="ruby">&gt; <span class="constant">WriteFlash_for_bayer_Cam</span> <span class="symbol">:</span> emmc <span class="keyword">or</span> nand flash                                             </span>
-</code></pre><blockquote>
-<p>awb calibration</p>
-</blockquote>
-<p>property_set(&quot;mfg.awb.calibration.trigger&quot;, &quot;1&quot;) trigger 3a thread to run HTC_AWB_Calibration_collect() </p>
-<blockquote>
-<p>verify result</p>
-</blockquote>
-<h2 id="Trouble shooting"><strong>Trouble shooting</strong></h2><ul>
-<li>raw image have a black area on top of picture duo to disable frame-skip.</li>
-</ul>
 
       
     </div>

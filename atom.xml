@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-11-16T02:28:19.439Z</updated>
+  <updated>2015-11-18T04:32:50.790Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,15 +15,83 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[MEAN stack week 1]]></title>
+    <link href="http://yoursite.com/2015/11/18/MEAN-stack-week-1/"/>
+    <id>http://yoursite.com/2015/11/18/MEAN-stack-week-1/</id>
+    <published>2015-11-18T04:10:53.000Z</published>
+    <updated>2015-11-18T04:32:50.790Z</updated>
+    <content type="html"><![CDATA[<h2 id="MongoDB and NodeJS"><strong>MongoDB and NodeJS</strong></h2><p>#&gt; docker run mongo</p>
+<p>#&gt; docker run node</p>
+<p>#&gt; docker images</p>
+<p>#&gt; docker run -p 127.0.0.1:27017:27017 -d --name db mongo mongod            (server)</p>
+<p>#&gt; winpty docker run -it --link db --rm mango sh -c &apos;exec mango &quot;db:27017&quot;&apos; (client)</p>
+<p>#&gt; winpty docker run -it --name node --link db -p 8082:8082 node bash (node &lt;--&gt; mongo db server)</p>
+<p><strong>Reference</strong></p>
+<p><a href="http://ifdattic.com/how-to-mongodb-nodejs-docker/" target="_blank" rel="external">docker mongodb and nodejs</a></p>
+<p><a href="http://www.tutorialspoint.com/nodejs/nodejs_event_loop.htm" target="_blank" rel="external">nodejs event loop</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="MongoDB and NodeJS"><strong>MongoDB and NodeJS</strong></h2><p>#&gt; docker run mongo</p>
+<p>#&gt; docker run node</p>
+<p>#&gt; dock]]>
+    </summary>
+    
+      <category term="MEAN stack" scheme="http://yoursite.com/categories/MEAN-stack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[C++ week 3 / class and object]]></title>
+    <link href="http://yoursite.com/2015/11/16/class-and-object/"/>
+    <id>http://yoursite.com/2015/11/16/class-and-object/</id>
+    <published>2015-11-16T11:43:47.000Z</published>
+    <updated>2015-11-18T03:11:47.534Z</updated>
+    <content type="html"><![CDATA[<p>Q1 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">class</span> A {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    A(<span class="keyword">int</span> n=<span class="number">0</span>):val(n) {}</span><br><span class="line">    ~A() {}</span><br><span class="line">    <span class="function">A&amp; <span class="title">GetObj</span><span class="params">()</span></span><br><span class="line">    </span>{</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    } </span><br><span class="line">    </span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    A a;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a.val &lt;&lt; endl;</span><br><span class="line">    a.GetObj() = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a.val &lt;&lt; endl;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Q2 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">class</span> Sample{</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> v;</span><br><span class="line">    Sample(<span class="keyword">int</span> n):v(n) { }</span><br><span class="line">    Sample(<span class="keyword">const</span> Sample &amp;rhs)</span><br><span class="line">    {</span><br><span class="line">        v = <span class="number">2</span>*rhs.v;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="function">Sample <span class="title">a</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">    Sample b = a;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; b.v;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Q3 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">class</span> Base {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    Base(<span class="keyword">int</span> n):k(n) { }</span><br><span class="line">};</span><br><span class="line"><span class="keyword">class</span> Big {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> v; Base b;</span><br><span class="line">    Big(<span class="keyword">int</span> n):v(n),b(n) {}</span><br><span class="line">    Big(<span class="keyword">const</span> Big &amp;rhs):v(rhs.v),b(rhs.b.k) {}</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="function">Big <span class="title">a1</span><span class="params">(<span class="number">5</span>)</span></span>; Big a2 = a1;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a1.v &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; a1.b.k &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a2.v &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; a2.b.k &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>Q4 :</p>
+<pre><code class="cpp">
+</code></pre>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Q1 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><]]>
+    </summary>
+    
+      <category term="C++" scheme="http://yoursite.com/categories/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[C++ week 8 / STL 1]]></title>
+    <link href="http://yoursite.com/2015/11/16/STL-1/"/>
+    <id>http://yoursite.com/2015/11/16/STL-1/</id>
+    <published>2015-11-16T07:00:15.000Z</published>
+    <updated>2015-11-16T07:01:05.483Z</updated>
+    <content type="html"><![CDATA[<p>Q1 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">Q2 :</span><br><span class="line"></span><br><span class="line">```cpp</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>Q1 :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><]]>
+    </summary>
+    
+      <category term="C++" scheme="http://yoursite.com/categories/C/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[docker basic]]></title>
     <link href="http://yoursite.com/2015/11/16/docker-basic/"/>
     <id>http://yoursite.com/2015/11/16/docker-basic/</id>
     <published>2015-11-16T02:03:40.000Z</published>
-    <updated>2015-11-16T02:28:19.439Z</updated>
+    <updated>2015-11-18T04:09:15.278Z</updated>
     <content type="html"><![CDATA[<p><a href="https://docs.docker.com/engine/installation/windows/" target="_blank" rel="external">Install docker on windows</a></p>
 <p>You will have a docker quict start terminal and a docker server install in virtualbox.</p>
 <p>Launch docker</p>
-<p>install and run bash</p>
+<p>Install and run bash</p>
 <p>#&gt; winpty docker run -it ubuntu bash</p>
 <p>#&gt; sudo apt-get update</p>
 <p>#&gt; sudo apt-get install gcc</p>
@@ -32,6 +100,9 @@
 <p>#&gt; winpty docker commit <id> gcc:utuntu</id></p>
 <p>#&gt; winpty docker images (show all images)</p>
 <p>#&gt; winpty docker run -it gcc:ubuntu</p>
+<p>Clear all container</p>
+<p>#&gt; docker stop $(docker ps -a -q)</p>
+<p>#&gt; docker rm $(docker ps -a -q)</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p><a href="https://docs.docker.com/engine/installation/windows/" target="_blank" rel="external">Install docker on windows</a></p>
@@ -95,11 +166,11 @@ and it define at your local drive/hard]]>
   </entry>
   
   <entry>
-    <title><![CDATA[C++ week 3 / operator overloading]]></title>
+    <title><![CDATA[C++ week 4 / operator overloading]]></title>
     <link href="http://yoursite.com/2015/11/10/operator-overloading/"/>
     <id>http://yoursite.com/2015/11/10/operator-overloading/</id>
     <published>2015-11-10T12:54:07.000Z</published>
-    <updated>2015-11-12T12:02:29.337Z</updated>
+    <updated>2015-11-16T11:40:32.835Z</updated>
     <content type="html"><![CDATA[<ul>
 <li><a href="https://zmy.im/archives/2015/08/76.html" target="_blank" rel="external">reference link</a></li>
 </ul>
